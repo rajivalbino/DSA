@@ -1,9 +1,14 @@
-#include "linked-list.h"
+#include "linked-list.hpp"
 
-bool LinkedList::isEmpty()	{return (size == 0);}
-int LinkedList::size_()		{return size;}
-int LinkedList::head_()		{return head->data;}
-int LinkedList::tail_()		{return tail->data;}
+void LinkedList::clear()
+{
+	while (head != nullptr)
+	{
+		auto temp = head;
+		head = head->next;
+		delete temp;
+	}
+}
 
 void LinkedList::addHead(int d)
 {
