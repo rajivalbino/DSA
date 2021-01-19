@@ -5,5 +5,17 @@
     <TestDuration Test="TestCaseName.TestName" Duration="1" />
     <TestDuration Test="TestCaseName.TestA" Duration="1" />
     <TestDuration Test="TestCaseName.TestB" Duration="1" />
+    <TestDuration Test="TestLinkedList._isEmpty" Duration="1" />
+    <TestDuration Test="TestLinkedList._size_" Duration="1" />
+    <TestDuration Test="TestLinkedList._head_" Duration="1" />
+    <TestDuration Test="TestLinkedList._tail_" Duration="1" />
+    <TestDuration Test="TestLinkedList._addHead" Duration="1" />
+    <TestDuration Test="TestLinkedList._addTail" Duration="1" />
+    <TestDuration Test="TestLinkedList.isEmpty" Duration="1" />
+    <TestDuration Test="TestLinkedList.size_" Duration="1" />
+    <TestDuration Test="TestLinkedList.head_" Duration="1" />
+    <TestDuration Test="TestLinkedList.tail_" Duration="1" />
+    <TestDuration Test="TestLinkedList.addHead" Duration="1" />
+    <TestDuration Test="TestLinkedList.addTail" Duration="1" />
   </TestDurations>
 </GtaTestDurations>
