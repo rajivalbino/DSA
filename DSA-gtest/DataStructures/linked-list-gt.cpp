@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "linked-list.hpp"
+using rds::LinkedList;
 
 /* Singly Linked List
  * 
@@ -18,9 +19,11 @@
 TEST(TestLinkedList, isEmpty)
 {
 	LinkedList* plist = new LinkedList();
-	ASSERT_TRUE(plist->isEmpty());
+	EXPECT_TRUE(plist->isEmpty());
 	plist->addHead(5);
-	ASSERT_FALSE(plist->isEmpty());
+	EXPECT_FALSE(plist->isEmpty());
+	plist->removeHead();
+	EXPECT_TRUE(plist->isEmpty());
 	delete plist;
 }
 
@@ -137,6 +140,29 @@ TEST(TestLinkedList, removeHead)
 	EXPECT_EQ(1, plist->size_());
 
 	plist->removeHead();
+	EXPECT_TRUE(plist->isEmpty());
+	EXPECT_EQ(nullptr, plist->phead_());
+	EXPECT_EQ(nullptr, plist->ptail_());
+	EXPECT_EQ(0, plist->size_());
+
+	delete plist;
+}
+
+TEST(TestLinkedList, removeTail)
+{
+	LinkedList* plist = new LinkedList();
+	plist->addHead(5);
+	plist->addHead(10);
+	EXPECT_EQ(10, plist->head_());
+	EXPECT_EQ(5, plist->tail_());
+	EXPECT_EQ(2, plist->size_());
+	
+	plist->removeTail();
+	EXPECT_EQ(10, plist->head_());
+	EXPECT_EQ(10, plist->tail_());
+	EXPECT_EQ(1, plist->size_());
+	
+	plist->removeTail();
 	EXPECT_TRUE(plist->isEmpty());
 	EXPECT_EQ(nullptr, plist->phead_());
 	EXPECT_EQ(nullptr, plist->ptail_());
