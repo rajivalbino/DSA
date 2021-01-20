@@ -26,12 +26,12 @@ namespace rds {
 		LinkedList() { head = tail = nullptr; size = 0; }
 		~LinkedList() { this->clear(); }
 
-		inline bool isEmpty() { return (size == 0); }
-		inline int size_() { return size; }
-		inline int head_() { return head->data; }
-		inline int tail_() { return tail->data; }
-		inline Node* phead_() { return head; }
-		inline Node* ptail_() { return tail; }
+		inline bool isEmpty()	{ return (size == 0); }
+		inline int size_()		{ return size; }
+		inline int head_()		{ return head->data; }
+		inline int tail_()		{ return tail->data; }
+		inline Node* phead_()	{ return head; }
+		inline Node* ptail_()	{ return tail; }
 
 		void clear() {
 			tail = nullptr;
@@ -82,9 +82,9 @@ namespace rds {
 				while (ptr->next->next != nullptr)
 					ptr = ptr->next;
 
-				auto tdata = tail->data;
-				delete tail;
-				tail = ptr->next;
+				auto tdata = ptr->next->data;
+				delete ptr->next;
+				tail = ptr;
 				tail->next = nullptr;
 				size--;
 
