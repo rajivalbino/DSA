@@ -49,4 +49,5 @@ c:\users\rajiv mota\documents\visual studio 2017\projects\dsa\packages\microsoft
           [
               T=std::tuple<>
           ]
+c:\users\rajiv mota\documents\visual studio 2017\projects\dsa\include\linked-list.hpp(71): warning C4715: 'LinkedList::removeHead': not all control paths return a value
   DSA-gtest.vcxproj -> C:\Users\Rajiv Mota\Documents\Visual Studio 2017\Projects\DSA\Release\DSA-gtest.exe

@@ -155,10 +155,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DSA.cpp" />
+    <ClInclude Include="..\include\linked-list.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\linked-list.hpp" />
+    <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

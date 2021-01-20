@@ -17,5 +17,7 @@
     <TestDuration Test="TestLinkedList.tail_" Duration="1" />
     <TestDuration Test="TestLinkedList.addHead" Duration="1" />
     <TestDuration Test="TestLinkedList.addTail" Duration="1" />
+    <TestDuration Test="TestLinkedList.clear" Duration="1" />
+    <TestDuration Test="TestLinkedList.addAt" Duration="1" />
   </TestDurations>
 </GtaTestDurations>
