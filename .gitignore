@@ -1,2 +1,10 @@
 /.vs
 /.vscode
+
+# VS build files
+*.log
+*.tlog
+*.exe
+*.pdb
+*.obj
+*.testdurations
