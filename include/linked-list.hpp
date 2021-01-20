@@ -28,15 +28,55 @@ public:
 	inline int size_()		{ return size; }
 	inline int head_()		{ return head->data; }
 	inline int tail_()		{ return tail->data; }
+	inline Node* phead_()	{ return head; }
+	inline Node* ptail_()	{ return tail; }
 	
 	void clear() {
+		tail = nullptr;
 		while (head != nullptr) {
 			auto temp = head;
 			head = head->next;
 			delete temp;
 		}
+		size = 0;
 	}
 	
 	void addHead(int d) { head = (isEmpty() ? tail = new Node(d) : new Node(d, head)); size++; }
 	void addTail(int d) { tail = (isEmpty() ? head = new Node(d) : tail->next = new Node(d)); size++; }
+	
+	void addAt(int idx, int d) {
+		if (idx < 0)		{ /*throw bad index*/ return; }
+		if (idx == 0)		{ addHead(d); return; }
+		if (idx == size)	{ addTail(d); return; }
+		if (idx > size)		{ /*throw cant access*/ return; }
+
+		auto ptr = head;
+		for (int i = 0; i < idx-1; i++)
+			ptr = ptr->next;
+		
+		ptr->next = new Node(d, ptr->next);
+		size++;
+	}
+
+	int removeHead() {
+		if (!isEmpty()) {
+			auto temp = head;
+			auto tdata = head->data;
+			head = head->next;
+			delete temp;
+			size--;
+			return tdata;
+		}
+		/*else throw empty list*/
+	}
+
+	int removeTail() {
+		if (!isEmpty()) {
+			auto tdata = tail->data;
+			delete tail;
+			size--;
+			return tdata;
+		}
+		/*else throw empty list*/
+	}
 };
