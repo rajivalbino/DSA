@@ -6,5 +6,7 @@
 *.tlog
 *.exe
 *.pdb
+*.ipbd
 *.obj
+*.iobj
 *.testdurations
