@@ -26,12 +26,12 @@ namespace rds {
 		LinkedList() { head = tail = nullptr; size = 0; }
 		~LinkedList() { this->clear(); }
 
-		inline bool isEmpty()	{ return (size == 0); }
-		inline int size_()		{ return size; }
-		inline int head_()		{ return head->data; }
-		inline int tail_()		{ return tail->data; }
-		inline Node* phead_()	{ return head; }
-		inline Node* ptail_()	{ return tail; }
+		inline bool  isEmpty() const { return (size == 0); }
+		inline int   size_()   const { return size; }
+		inline int   head_()   const { return head->data; }
+		inline int   tail_()   const { return tail->data; }
+		inline Node* phead_()  const { return head; }
+		inline Node* ptail_()  const { return tail; }
 
 		void clear() {
 			tail = nullptr;
