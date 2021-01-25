@@ -44,6 +44,7 @@ namespace rds {
 		}
 
 		void addHead(int d) { head = (isEmpty() ? tail = new Node(d) : new Node(d, head)); size++; }
+
 		void addTail(int d) { tail = (isEmpty() ? head = new Node(d) : tail->next = new Node(d)); size++; }
 
 		void addAt(int idx, int d) {
@@ -92,6 +93,10 @@ namespace rds {
 			}
 			/*else throw empty list*/
 		}
+
+		// TODO: removeAt()
+		// TODO: remove() by value
+		// TODO: sort() ?
 	};
 
 }
