@@ -24,5 +24,8 @@
     <TestDuration Test="TestStack.isEmpty" Duration="1" />
     <TestDuration Test="TestStack.size" Duration="1" />
     <TestDuration Test="TestStack.top" Duration="1" />
+    <TestDuration Test="TestQueue.isEmpty" Duration="1" />
+    <TestDuration Test="TestQueue.size" Duration="1" />
+    <TestDuration Test="TestQueue.first" Duration="1" />
   </TestDurations>
 </GtaTestDurations>

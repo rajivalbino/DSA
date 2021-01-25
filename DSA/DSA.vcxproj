@@ -156,6 +156,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\include\linked-list.hpp" />
+    <ClInclude Include="..\include\queue.hpp" />
     <ClInclude Include="..\include\stack.hpp" />
   </ItemGroup>
   <ItemGroup>
