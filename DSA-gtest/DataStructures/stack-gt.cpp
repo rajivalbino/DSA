@@ -14,56 +14,56 @@ using rds::Stack;
 
 TEST(TestStack, isEmpty)
 {
-	Stack* pstk = new Stack();
-	EXPECT_TRUE(pstk->isEmpty());
+	Stack* pstck = new Stack();
+	EXPECT_TRUE(pstck->isEmpty());
 
-	pstk->push(2);
-	EXPECT_FALSE(pstk->isEmpty());
+	pstck->push(2);
+	EXPECT_FALSE(pstck->isEmpty());
 
-	pstk->pop();
-	EXPECT_TRUE(pstk->isEmpty());
+	pstck->pop();
+	EXPECT_TRUE(pstck->isEmpty());
 
-	pstk->push(5);
-	pstk->push(10);
-	pstk->push(15);
-	EXPECT_FALSE(pstk->isEmpty());
+	pstck->push(5);
+	pstck->push(10);
+	pstck->push(15);
+	EXPECT_FALSE(pstck->isEmpty());
 
-	pstk->popAll();
-	EXPECT_TRUE(pstk->isEmpty());
+	pstck->popAll();
+	EXPECT_TRUE(pstck->isEmpty());
 
-	delete pstk;
+	delete pstck;
 }
 
 TEST(TestStack, size)
 {
-	Stack* pstk = new Stack();
-	EXPECT_EQ(0, pstk->size());
+	Stack* pstck = new Stack();
+	EXPECT_EQ(0, pstck->size());
 
-	pstk->push(2);
-	EXPECT_EQ(1, pstk->size());
+	pstck->push(2);
+	EXPECT_EQ(1, pstck->size());
 
-	pstk->pop();
-	EXPECT_EQ(0, pstk->size());
+	pstck->pop();
+	EXPECT_EQ(0, pstck->size());
 
-	pstk->push(5);
-	pstk->push(10);
-	pstk->push(15);
-	pstk->push(20);
-	EXPECT_EQ(4, pstk->size());
+	pstck->push(5);
+	pstck->push(10);
+	pstck->push(15);
+	pstck->push(20);
+	EXPECT_EQ(4, pstck->size());
 
-	pstk->popAll();
-	EXPECT_EQ(0, pstk->size());
+	pstck->popAll();
+	EXPECT_EQ(0, pstck->size());
 
-	pstk->push(1);
-	pstk->push(2);
-	pstk->push(3);
-	pstk->pop();
-	pstk->pop();
-	pstk->push(4);
-	EXPECT_EQ(2, pstk->size());
+	pstck->push(1);
+	pstck->push(2);
+	pstck->push(3);
+	pstck->pop();
+	pstck->pop();
+	pstck->push(4);
+	EXPECT_EQ(2, pstck->size());
 
 
-	delete pstk;
+	delete pstck;
 }
 
 TEST(TestStack, top)
