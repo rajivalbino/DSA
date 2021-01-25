@@ -4,6 +4,9 @@
     <ClCompile Include="DataStructures\linked-list-gt.cpp">
       <Filter>DataStructures</Filter>
     </ClCompile>
+    <ClCompile Include="DataStructures\stack-gt.cpp">
+      <Filter>DataStructures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
