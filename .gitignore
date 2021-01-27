@@ -1,0 +1,17 @@
+.vs/
+.vscode/
+Debug/
+Release/
+DSA/
+DSA-gtest/
+src/
+
+# VS build files
+*.log
+*.tlog
+*.exe
+*.pdb
+*.ipbd
+*.obj
+*.iobj
+*.testdurations
