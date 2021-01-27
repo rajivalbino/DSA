@@ -33,17 +33,17 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
-    <ClCompile Include="DataStructures\linked-list-gt.cpp" />
-    <ClCompile Include="DataStructures\queue-gt.cpp" />
-    <ClCompile Include="DataStructures\stack-gt.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\DSA\DSA.vcxproj">
       <Project>{f541e050-96a2-450a-b365-e22c7d11cc78}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\gtest\linked-list-gt.cpp" />
+    <ClCompile Include="..\gtest\queue-gt.cpp" />
+    <ClCompile Include="..\gtest\stack-gt.cpp" />
   </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

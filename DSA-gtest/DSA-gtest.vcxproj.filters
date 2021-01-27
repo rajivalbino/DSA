@@ -1,22 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="DataStructures\linked-list-gt.cpp">
-      <Filter>DataStructures</Filter>
-    </ClCompile>
-    <ClCompile Include="DataStructures\stack-gt.cpp">
-      <Filter>DataStructures</Filter>
-    </ClCompile>
-    <ClCompile Include="DataStructures\queue-gt.cpp">
-      <Filter>DataStructures</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="DataStructures">
+    <Filter Include="gtest">
       <UniqueIdentifier>{529f7a66-8951-44a8-9f1b-ede29c737d74}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\gtest\linked-list-gt.cpp">
+      <Filter>gtest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gtest\queue-gt.cpp">
+      <Filter>gtest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gtest\stack-gt.cpp">
+      <Filter>gtest</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
