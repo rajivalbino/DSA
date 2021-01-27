@@ -3,8 +3,6 @@
 Debug/
 Release/
 DSA/
-DSA-gtest/
-src/
 
 # VS build files
 *.log
