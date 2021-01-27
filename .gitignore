@@ -1,15 +1,4 @@
 .vs/
-.vscode/
-Debug/
-Release/
-DSA/
+DSA/Release/
+DSA/Debug/
 
-# VS build files
-*.log
-*.tlog
-*.exe
-*.pdb
-*.ipbd
-*.obj
-*.iobj
-*.testdurations
