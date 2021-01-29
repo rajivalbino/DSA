@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "queue.hpp"
-using rds::Queue;
+
+typedef rds::Queue<int> Queue;
 
 /* Queue
  *
