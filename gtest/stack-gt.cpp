@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "stack.hpp"
-using rds::Stack;
+
+typedef rds::Stack<int> Stack;
 
 /* Stack
  *
