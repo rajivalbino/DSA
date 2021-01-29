@@ -3,5 +3,5 @@
 
 TEST(TestDeque, B)
 {
-
+	EXPECT_TRUE(true);
 }
