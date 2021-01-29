@@ -36,6 +36,7 @@
     <ClCompile Include="..\gtest\deque-gt.cpp" />
     <ClCompile Include="..\gtest\doubly-linked-list-gt.cpp" />
     <ClCompile Include="..\gtest\linked-list-gt.cpp" />
+    <ClCompile Include="..\gtest\priority-queue-gt.cpp" />
     <ClCompile Include="..\gtest\queue-gt.cpp" />
     <ClCompile Include="..\gtest\stack-gt.cpp" />
     <ClCompile Include="main.cpp" />
@@ -47,6 +48,7 @@
     <ClInclude Include="..\include\deque.hpp" />
     <ClInclude Include="..\include\doubly-linked-list.hpp" />
     <ClInclude Include="..\include\linked-list.hpp" />
+    <ClInclude Include="..\include\priority-queue.hpp" />
     <ClInclude Include="..\include\queue.hpp" />
     <ClInclude Include="..\include\stack.hpp" />
   </ItemGroup>

@@ -17,6 +17,9 @@
     <ClCompile Include="..\gtest\deque-gt.cpp">
       <Filter>gtest</Filter>
     </ClCompile>
+    <ClCompile Include="..\gtest\priority-queue-gt.cpp">
+      <Filter>gtest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">
@@ -40,6 +43,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\deque.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\priority-queue.hpp">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
