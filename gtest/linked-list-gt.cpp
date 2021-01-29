@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "linked-list.hpp"
-using rds::LinkedList;
+
+typedef rds::LinkedList<int> LinkedList;
 
 /* Singly Linked List
  * 

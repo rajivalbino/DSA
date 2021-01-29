@@ -5,16 +5,17 @@
 
 namespace rds {
 
+	template<typename T>
 	class LinkedList {
 
 	private:
 		class Node {
 		public:
-			int data;
+			T data;
 			Node* next;
 
-			Node(int _d) : data(_d) { next = nullptr; }
-			Node(int _d, Node* _n) : data(_d), next(_n) {}
+			Node(T _d) : data(_d) { next = nullptr; }
+			Node(T _d, Node* _n) : data(_d), next(_n) {}
 		};
 
 	private:
@@ -24,12 +25,14 @@ namespace rds {
 
 	public:
 		LinkedList()  { head = tail = nullptr; size = 0; }
+		LinkedList(const LinkedList& ll) = delete;
+		LinkedList& operator=(LinkedList ll) = delete;
 		~LinkedList() { this->clear(); }
 
 		inline bool  isEmpty() const { return (size == 0); }
 		inline int   size_()   const { return size; }
-		inline int   head_()   const { return head->data; }
-		inline int   tail_()   const { return tail->data; }
+		inline T     head_()   const { return head->data; }
+		inline T     tail_()   const { return tail->data; }
 		inline Node* phead_()  const { return head; }
 		inline Node* ptail_()  const { return tail; }
 
@@ -43,17 +46,17 @@ namespace rds {
 			size = 0;
 		}
 
-		void addHead(int d) {
+		void addHead(T d) {
 			head = (isEmpty() ? tail = new Node(d) : new Node(d, head));
 			size++;
 		}
 
-		void addTail(int d) { 
+		void addTail(T d) { 
 			tail = (isEmpty() ? head = new Node(d) : tail->next = new Node(d));
 			size++;
 		}
 
-		void addAt(int idx, int d) {
+		void addAt(int idx, T d) {
 			if (idx < 0)     { /*throw bad index*/ return; }
 			if (idx == 0)    { addHead(d); return; }
 			if (idx == size) { addTail(d); return; }
@@ -67,7 +70,7 @@ namespace rds {
 			size++;
 		}
 
-		int removeHead() {
+		T removeHead() {
 			if (!isEmpty()) {
 				auto temp = head;
 				auto tdata = head->data;
@@ -81,7 +84,7 @@ namespace rds {
 			/*else throw empty list*/
 		}
 
-		int removeTail() {
+		T removeTail() {
 			if (!isEmpty()) {
 				if (size == 1) return removeHead();
 
@@ -100,7 +103,7 @@ namespace rds {
 			/*else throw empty list*/
 		}
 
-		int removeAt(int idx) {
+		T removeAt(int idx) {
 			if (idx < 0)       /*throw bad index*/ return NULL;
 			if (idx == 0)      return removeHead();
 			if (idx == size-1) return removeTail();
@@ -119,7 +122,7 @@ namespace rds {
 			return tdata;
 		}
 
-		bool remove(int d) {
+		bool remove(T d) {
 			if (isEmpty())
 				return false;
 			
@@ -146,7 +149,7 @@ namespace rds {
 			return false;
 		}
 
-		bool contains(int d) {
+		bool contains(T d) {
 			for (auto ptr = head; ptr != nullptr; ptr = ptr->next)
 				if (ptr->data == d)
 					return true;
