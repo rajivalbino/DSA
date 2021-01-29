@@ -110,9 +110,60 @@ namespace rds {
 			/*else throw empty list*/
 		}
 		
-		// removeAt
-		// contains
-		// remove
+		int removeAt(int idx) {
+			if (idx < 0)       /*throw bad index*/ return NULL;
+			if (idx == 0)      return removeHead();
+			if (idx == size-1) return removeTail();
+			if (idx >= size)   /*throw bad index*/ return NULL;
+
+			auto ptr = head;
+			for (int i = 0; i < idx - 1; i++)
+				ptr = ptr->next;
+
+			auto temp = ptr->next;
+			auto tdata = temp->data;
+			ptr->next = temp->next;
+			temp->next->prev = ptr;
+			delete temp;
+			size--;
+
+			return tdata;
+		}
+
+		bool remove(int d) {
+			if (isEmpty())
+				return false;
+
+			if (head_() == d) {
+				removeHead();
+				return true;
+			}
+
+			for (auto ptr = head; ptr->next != nullptr; ptr = ptr->next) {
+				if (ptr->next->data == d) {
+					auto temp = ptr->next;
+					ptr->next = temp->next;
+					temp->next->prev = ptr;
+					delete temp;
+					size--;
+					return true;
+				}
+			}
+
+			if (tail_() == d) {
+				removeTail();
+				return true;
+			}
+
+			return false;
+		}
+
+		bool contains(int d) {
+			for (auto ptr = head; ptr != nullptr; ptr = ptr->next)
+				if (ptr->data == d)
+					return true;
+			return false;
+		}
 
 	};
 
