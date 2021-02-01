@@ -16,6 +16,15 @@ namespace rds {
 
 			Node(T _d) : data(_d) { next = nullptr; }
 			Node(T _d, Node* _n) : data(_d), next(_n) {}
+
+			Node* operator+(int idx) {
+				if (idx == 0) return this;
+
+				Node* ptr = next;
+				for (int i = 1; i < idx; i++)
+					ptr = ptr->next;
+				return ptr;
+			}
 		};
 
 	private:
@@ -62,9 +71,7 @@ namespace rds {
 			if (idx == size) { addTail(d); return; }
 			if (idx > size)  { /*throw cant access*/ return; }
 
-			auto ptr = head;
-			for (int i = 0; i < idx - 1; i++)
-				ptr = ptr->next;
+			auto ptr = head + (idx - 1);
 
 			ptr->next = new Node(d, ptr->next);
 			size++;
