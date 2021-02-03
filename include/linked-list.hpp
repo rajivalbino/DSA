@@ -71,7 +71,9 @@ namespace rds {
 			if (idx == size) { addTail(d); return; }
 			if (idx > size)  { /*throw cant access*/ return; }
 
-			auto ptr = head + (idx - 1);
+			auto ptr = head;
+			for (int i = 0; i < idx-1; i++)
+				ptr = ptr->next;
 
 			ptr->next = new Node(d, ptr->next);
 			size++;
