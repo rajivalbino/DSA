@@ -16,6 +16,31 @@ namespace rds {
 			Node(T _d, Node* _n = nullptr) : data(_d), next(_n) {}
 		};
 
+	public:
+		class Iterator {
+		public:
+			Node* ptr;
+
+			Iterator(Node* _p) : ptr(_p) {}
+
+			void operator++() { ptr = ptr->next; }
+			void operator++(int) { ptr = ptr->next; }
+			bool operator==(Iterator other) { return (ptr == other.ptr); }
+			bool operator!=(Iterator other) { return (ptr != other.ptr); }
+			T    operator*() { return ptr->data; }
+			Iterator operator+(int idx) {
+				auto it = *this;
+				for (int i = 0; i < idx; ++i)
+				{
+					if (it.ptr != nullptr)
+						++it;
+					else
+						break; /*throw out of list bounds*/
+				}
+				return it;
+			}
+		};
+
 	private:
 		int size;
 		Node* head;
