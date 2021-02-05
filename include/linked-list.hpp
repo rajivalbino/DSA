@@ -4,7 +4,6 @@
 #pragma once
 
 namespace rds {
-
 	template<typename T>
 	class LinkedList {
 
@@ -14,17 +13,7 @@ namespace rds {
 			T data;
 			Node* next;
 
-			Node(T _d) : data(_d) { next = nullptr; }
-			Node(T _d, Node* _n) : data(_d), next(_n) {}
-
-			Node* operator+(int idx) {
-				if (idx == 0) return this;
-
-				Node* ptr = next;
-				for (int i = 1; i < idx; i++)
-					ptr = ptr->next;
-				return ptr;
-			}
+			Node(T _d, Node* _n = nullptr) : data(_d), next(_n) {}
 		};
 
 	private:
