@@ -21,13 +21,13 @@ namespace rds {
 		public:
 			Node* ptr;
 
-			Iterator(Node* _p) : ptr(_p) {}
+			Iterator(Node* _p = nullptr) : ptr(_p) {}
 
 			void operator++() { ptr = ptr->next; }
 			void operator++(int) { ptr = ptr->next; }
 			bool operator==(Iterator other) { return (ptr == other.ptr); }
 			bool operator!=(Iterator other) { return (ptr != other.ptr); }
-			T    operator*() { return ptr->data; }
+			T&   operator*() { return ptr->data; }
 			Iterator operator+(int idx) {
 				auto it = *this;
 				for (int i = 0; i < idx; ++i)
