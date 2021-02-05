@@ -221,3 +221,23 @@ TEST(TestLinkedList, removeTail)
 	delete plist;
 }
 
+TEST(TestLinkedList, iterator)
+{
+	rds::LinkedList<int> list;
+	rds::LinkedList<int>::Iterator it;
+
+	list.addHead(5);
+	list.addHead(10);
+	list.addHead(15);
+	list.addHead(20);
+	list.addHead(25);
+
+	for (it = list.phead_(); it != nullptr; ++it)
+		*it = *it << 1;
+
+	EXPECT_EQ(50, list.removeHead());
+	EXPECT_EQ(40, list.removeHead());
+	EXPECT_EQ(30, list.removeHead());
+	EXPECT_EQ(20, list.removeHead());
+	EXPECT_EQ(10, list.removeHead());
+}
