@@ -279,3 +279,20 @@ TEST(TestLinkedList, operatorLeftShift)
 	EXPECT_EQ(10, list.removeHead());
 	EXPECT_EQ(5, list.removeHead());
 }
+
+TEST(TestLinkedList, operatorDecrement)
+{
+	LinkedList list;
+
+	list << 5;
+	list << 10;
+	list << 15;
+	list << 20;
+	list << 25;
+
+	EXPECT_EQ(25, --list);
+	EXPECT_EQ(5, list--);
+	EXPECT_EQ(20, --list);
+	EXPECT_EQ(10, list--);
+	EXPECT_EQ(15, --list);
+}
