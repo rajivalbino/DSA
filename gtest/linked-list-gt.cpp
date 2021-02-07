@@ -241,3 +241,24 @@ TEST(TestLinkedList, iterator)
 	EXPECT_EQ(20, list.removeHead());
 	EXPECT_EQ(10, list.removeHead());
 }
+
+TEST(TestLinkedList, operatorPlus)
+{
+	LinkedList list;
+	LinkedList::Iterator it;
+
+	list.addHead(5);
+	list.addHead(10);
+	list.addHead(15);
+	list.addHead(20);
+	list.addHead(25);
+
+	it = list.phead_();
+	*(it+2) = 200;
+
+	EXPECT_EQ(25, list.removeHead());
+	EXPECT_EQ(20, list.removeHead());
+	EXPECT_EQ(200, list.removeHead());
+	EXPECT_EQ(10, list.removeHead());
+	EXPECT_EQ(5, list.removeHead());
+}
