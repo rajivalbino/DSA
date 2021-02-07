@@ -183,7 +183,14 @@ namespace rds {
 			addHead(element);
 		}
 
-		// TODO: sort() ?
+		T operator--() {
+			return removeHead();
+		}
+
+		T operator--(int) {
+			return removeTail();
+		}
+		
 	};
 
 }
