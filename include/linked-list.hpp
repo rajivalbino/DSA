@@ -172,7 +172,7 @@ namespace rds {
 			return false;
 		}
 
-		bool contains(T d) {
+		bool contains(T d) const {
 			for (auto ptr = head; ptr != nullptr; ptr = ptr->next)
 				if (ptr->data == d)
 					return true;
