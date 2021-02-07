@@ -179,6 +179,10 @@ namespace rds {
 			return false;
 		}
 
+		void operator<<(const T& element) {
+			addHead(element);
+		}
+
 		// TODO: sort() ?
 	};
 
