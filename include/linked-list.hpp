@@ -18,9 +18,9 @@ namespace rds {
 
 	public:
 		class Iterator {
-		public:
 			Node* ptr;
-
+		
+		public:
 			Iterator(Node* _p = nullptr) : ptr(_p) {}
 
 			void operator++() { ptr = ptr->next; }
@@ -56,8 +56,8 @@ namespace rds {
 		inline int   size_()   const { return size; }
 		inline T     head_()   const { return head->data; }
 		inline T     tail_()   const { return tail->data; }
-		inline Node* phead_()  const { return head; }
-		inline Node* ptail_()  const { return tail; }
+		inline Iterator& begin() const { return Iterator(head); }
+		constexpr Iterator&& end() const { return Iterator(nullptr); }
 
 		void clear() {
 			tail = nullptr;
@@ -69,17 +69,17 @@ namespace rds {
 			size = 0;
 		}
 
-		void addHead(T d) {
+		void addHead(const T& d) {
 			head = (isEmpty() ? tail = new Node(d) : new Node(d, head));
 			size++;
 		}
 
-		void addTail(T d) { 
+		void addTail(const T& d) { 
 			tail = (isEmpty() ? head = new Node(d) : tail->next = new Node(d));
 			size++;
 		}
 
-		void addAt(int idx, T d) {
+		void addAt(int idx, const T& d) {
 			if (idx < 0)     { /*throw bad index*/ return; }
 			if (idx == 0)    { addHead(d); return; }
 			if (idx == size) { addTail(d); return; }
@@ -104,7 +104,7 @@ namespace rds {
 				if (isEmpty()) tail = nullptr;
 				return tdata;
 			}
-			/*else throw empty list*/
+			else throw;
 		}
 
 		T removeTail() {
@@ -123,14 +123,14 @@ namespace rds {
 
 				return tdata;
 			}
-			/*else throw empty list*/
+			else throw;
 		}
 
 		T removeAt(int idx) {
-			if (idx < 0)       /*throw bad index*/ return NULL;
+			if (idx < 0)       /*throw bad index*/ return 0; //NULL
 			if (idx == 0)      return removeHead();
 			if (idx == size-1) return removeTail();
-			if (idx >= size)   /*throw bad index*/ return NULL;
+			if (idx >= size)   /*throw bad index*/ return 0; //NULL
 
 			auto ptr = head;
 			for (int i = 0; i < idx - 1; i++)
@@ -145,7 +145,7 @@ namespace rds {
 			return tdata;
 		}
 
-		bool remove(T d) {
+		bool remove(const T& d) {
 			if (isEmpty())
 				return false;
 			
@@ -172,15 +172,19 @@ namespace rds {
 			return false;
 		}
 
-		bool contains(T d) const {
+		bool contains(const T& d) const {
 			for (auto ptr = head; ptr != nullptr; ptr = ptr->next)
 				if (ptr->data == d)
 					return true;
 			return false;
 		}
 
-		void operator<<(const T& element) {
-			addHead(element);
+		void operator<<(const T& e) {
+			addHead(e);
+		}
+
+		void operator>>(const T& e) {
+			addTail(e);
 		}
 
 		T operator--() {
