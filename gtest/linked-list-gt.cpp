@@ -44,21 +44,18 @@ TEST(TestLinkedList, clear)
 
 	plist->clear();
 	EXPECT_EQ(0, plist->size_());
-	EXPECT_EQ(nullptr, plist->phead_());
-	EXPECT_EQ(nullptr, plist->ptail_());
+	EXPECT_TRUE(plist->begin() == nullptr);
 	EXPECT_TRUE(plist->isEmpty());
 
 	plist->addHead(2);
 	plist->addTail(3);
 	EXPECT_EQ(2, plist->size_());
-	EXPECT_NE(nullptr, plist->phead_());
-	EXPECT_NE(nullptr, plist->ptail_());
+	EXPECT_TRUE(plist->begin() != nullptr);
 	EXPECT_FALSE(plist->isEmpty());
 
 	plist->clear();
 	EXPECT_EQ(0, plist->size_());
-	EXPECT_EQ(nullptr, plist->phead_());
-	EXPECT_EQ(nullptr, plist->ptail_());
+	EXPECT_TRUE(plist->begin() == nullptr);
 	EXPECT_TRUE(plist->isEmpty());
 
 	delete plist;
@@ -151,7 +148,7 @@ TEST(TestLinkedList, addAt)
 	plist->addTail(20);
 	plist->addAt(1, 100);
 	EXPECT_EQ(4, plist->size_());
-	EXPECT_EQ(100, plist->phead_()->next->data);
+	EXPECT_EQ(100, *(plist->begin()+1));
 	EXPECT_EQ(5, plist->head_());
 	EXPECT_EQ(20, plist->tail_());
 
@@ -162,7 +159,7 @@ TEST(TestLinkedList, addAt)
 	plist->addTail(4);
 	plist->addAt(2, 200);
 	EXPECT_EQ(5, plist->size_());
-	EXPECT_EQ(200, plist->phead_()->next->next->data);
+	EXPECT_EQ(200, *(plist->begin()+2));
 	EXPECT_EQ(1, plist->head_());
 	EXPECT_EQ(4, plist->tail_());
 	
@@ -185,8 +182,7 @@ TEST(TestLinkedList, removeHead)
 
 	plist->removeHead();
 	EXPECT_TRUE(plist->isEmpty());
-	EXPECT_EQ(nullptr, plist->phead_());
-	EXPECT_EQ(nullptr, plist->ptail_());
+	EXPECT_TRUE(plist->begin() == nullptr);
 	EXPECT_EQ(0, plist->size_());
 
 	delete plist;
@@ -214,8 +210,7 @@ TEST(TestLinkedList, removeTail)
 	
 	plist->removeTail();
 	EXPECT_TRUE(plist->isEmpty());
-	EXPECT_EQ(nullptr, plist->phead_());
-	EXPECT_EQ(nullptr, plist->ptail_());
+	EXPECT_TRUE(plist->begin() == nullptr);
 	EXPECT_EQ(0, plist->size_());
 
 	delete plist;
@@ -232,7 +227,7 @@ TEST(TestLinkedList, iterator)
 	list.addHead(20);
 	list.addHead(25);
 
-	for (it = list.phead_(); it != nullptr; ++it)
+	for (it = list.begin(); it != list.end(); ++it)
 		*it = *it << 1;
 
 	EXPECT_EQ(50, list.removeHead());
@@ -253,7 +248,7 @@ TEST(TestLinkedList, operatorPlus)
 	list.addHead(20);
 	list.addHead(25);
 
-	it = list.phead_();
+	it = list.begin();
 	*(it+2) = 200;
 
 	EXPECT_EQ(25, list.removeHead());
@@ -277,7 +272,25 @@ TEST(TestLinkedList, operatorLeftShift)
 	EXPECT_EQ(20, list.removeHead());
 	EXPECT_EQ(15, list.removeHead());
 	EXPECT_EQ(10, list.removeHead());
-	EXPECT_EQ(5, list.removeHead());
+	EXPECT_EQ(5,  list.removeHead());
+}
+
+TEST(TestLinkedList, operatorRightShift)
+{
+	LinkedList list;
+
+	list >> 5;
+	list >> 10;
+	list >> 15;
+	list >> 20;
+	list >> 25;
+
+	EXPECT_EQ(5,  list.removeHead());
+	EXPECT_EQ(10, list.removeHead());
+	EXPECT_EQ(15, list.removeHead());
+	EXPECT_EQ(20, list.removeHead());
+	EXPECT_EQ(25, list.removeHead());
+
 }
 
 TEST(TestLinkedList, operatorDecrement)
