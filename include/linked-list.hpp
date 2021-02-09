@@ -9,10 +9,13 @@ namespace rds {
 
 	private:
 		class Node {
-		public:
 			T data;
 			Node* next;
 
+			friend class LinkedList;
+			friend class Iterator;
+
+		public:
 			Node(T _d, Node* _n = nullptr) : data(_d), next(_n) {}
 		};
 
