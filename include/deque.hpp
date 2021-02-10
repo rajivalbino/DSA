@@ -1,5 +1,5 @@
 // Deque
-// int datatype
+// template datatype
 
 #include "doubly-linked-list.hpp"
 
@@ -7,23 +7,26 @@
 
 namespace rds {
 
+	template<typename T>
 	class Deque {
 	private:
-		DoublyLinkedList list;
+		DoublyLinkedList<T> list;
 
 	public:
-		Deque() {}
-		~Deque() { list.clear(); }
+		Deque()                   = default;
+		Deque(const Deque& d)     = delete;
+		Deque& operator=(Deque d) = delete;
+		~Deque()                  { list.clear(); }
 
-		inline bool isEmpty()	const { return list.isEmpty(); }
-		inline int size()		const { return list.size_(); }
-		inline int peekFront()	const { return list.head_(); }
-		inline int peekBack()	const { return list.tail_(); }
+		inline bool   empty()     const { return list.empty(); }
+		inline size_t size()      const { return list.size_(); }
+		inline T      peekFront() const { return list.head_(); }
+		inline T      peekBack()  const { return list.tail_(); }
 
-		inline void push(int d) { list.addHead(d); }
-		inline int pop() { return list.removeHead(); }
-		inline void inject(int d) { list.addTail(d); }
-		inline int eject() { return list.removeTail(); }
-		inline void popAll() { list.clear(); }
+		inline void push(const T& d)   { list.addHead(d); }
+		inline T    pop()              { return list.removeHead(); }
+		inline void inject(const T& d) { list.addTail(d); }
+		inline T    eject()            { return list.removeTail(); }
+		inline void popAll()           { list.clear(); }
 	};
 }
