@@ -23,6 +23,9 @@
     <ClCompile Include="..\gtest\hash-table-gt.cpp">
       <Filter>gtest</Filter>
     </ClCompile>
+    <ClCompile Include="..\gtest\dynamic-array.cpp">
+      <Filter>gtest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">
@@ -54,5 +57,11 @@
     <ClInclude Include="..\include\hash-table.hpp">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\dynamic-array.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
