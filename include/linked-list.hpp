@@ -24,10 +24,10 @@ namespace rds {
 		Node* tail;
 
 	public:
-		LinkedList() { head = tail = nullptr; size = 0; }
-		LinkedList(const LinkedList& ll) = delete;
-		LinkedList& operator=(LinkedList ll) = delete;
-		~LinkedList() { clear(); }
+		LinkedList()                        : size(0), head(nullptr), tail(nullptr) {}
+		LinkedList(const LinkedList& l)     = delete;
+		LinkedList& operator=(LinkedList l) = delete;
+		~LinkedList()                       { clear(); }
 
 		inline bool   empty() const { return (size == 0); }
 		inline size_t size_() const { return size; }

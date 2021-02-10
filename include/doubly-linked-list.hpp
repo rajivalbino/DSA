@@ -15,7 +15,8 @@ namespace rds {
 
 			friend class DoublyLinkedList;
 		public:
-			Node(const T& _d, Node* _p = nullptr, Node* _n = nullptr) : data(_d), prev(_p), next(_n) {}
+			Node(const T& d, Node* p = nullptr, Node* n = nullptr)
+				: data(d), prev(p), next(n) {}
 		};
 
 	private:
@@ -24,10 +25,10 @@ namespace rds {
 		Node* tail;
 	
 	public:
-		DoublyLinkedList() { head = tail = nullptr; size = 0; }
-		DoublyLinkedList(const DoublyLinkedList& l) = delete;
+		DoublyLinkedList()                              : size(0), head(nullptr), tail(nullptr) {}
+		DoublyLinkedList(const DoublyLinkedList& l)     = delete;
 		DoublyLinkedList& operator=(DoublyLinkedList l) = delete;
-		~DoublyLinkedList() { clear(); }
+		~DoublyLinkedList()                             { clear(); }
 
 		inline bool   empty() const { return (size == 0); }
 		inline size_t size_() const { return size; }
@@ -70,7 +71,7 @@ namespace rds {
 			if (idx < 0)     { throw; /*bad index*/ }
 			if (idx == 0)    { addHead(d); return; }
 			if (idx == size) { addTail(d); return; }
-			if (idx > size)  { throw; /*cant access*/ }
+			if (idx > size)  { throw; /*bad index*/ }
 
 			auto ptr = head;
 			for (int i = 0; i < idx - 1; i++)
@@ -84,11 +85,19 @@ namespace rds {
 
 		T removeHead() {
 			if (!empty()) {
+				if (size == 1) {
+					auto tdata = head->data;
+					delete head;
+					head = tail = nullptr;
+					size = 0;
+					return tdata;
+				}
+
 				auto temp = head;
 				auto tdata = head->data;
 				head = head->next;
-				head->prev = nullptr;
 				delete temp;
+				head->prev = nullptr;
 				size--;
 
 				if (empty()) tail = nullptr;
@@ -99,11 +108,19 @@ namespace rds {
 
 		T removeTail() {
 			if (!empty()) {
+				if (size == 1) {
+					auto tdata = head->data;
+					delete head;
+					head = tail = nullptr;
+					size = 0;
+					return tdata;
+				}
+
 				auto temp = tail;
 				auto tdata = tail->data;
 				tail = tail->prev;
-				tail->next = nullptr;
 				delete temp;
+				tail->next = nullptr;
 				size--;
 
 				if (empty()) head = nullptr;
