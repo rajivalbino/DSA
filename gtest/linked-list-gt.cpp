@@ -1,21 +1,7 @@
 #include "gtest/gtest.h"
 #include "linked-list.hpp"
 
-typedef rds::LinkedList<int> LinkedList;
-
-/* Singly Linked List
- * 
- * Attributes:
- * - int size
- * - Node* head
- * - Node* tail
- *
- * Methods:
- * addHead(), addTail(), addAt()
- * remove(data), removeHead(), removeTail(), removeAt(), clear()
- * head(), tail()
- * size(), empty(), 
- */
+using LinkedList = rds::LinkedList<int>;
 
 TEST(TestLinkedList, empty)
 {
