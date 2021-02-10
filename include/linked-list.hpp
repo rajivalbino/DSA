@@ -13,54 +13,28 @@ namespace rds {
 			Node* next;
 
 			friend class LinkedList;
-			friend class Iterator;
 
 		public:
-			Node(T _d, Node* _n = nullptr) : data(_d), next(_n) {}
-		};
-
-	public:
-		class Iterator {
-			Node* ptr;
-		
-		public:
-			Iterator(Node* _p = nullptr) : ptr(_p) {}
-
-			void operator++() { ptr = ptr->next; }
-			void operator++(int) { ptr = ptr->next; }
-			bool operator==(Iterator other) { return (ptr == other.ptr); }
-			bool operator!=(Iterator other) { return (ptr != other.ptr); }
-			T&   operator*() { return ptr->data; }
-			Iterator operator+(int idx) {
-				auto it = *this;
-				for (int i = 0; i < idx; ++i)
-				{
-					if (it.ptr != nullptr)
-						++it;
-					else
-						break; /*throw out of list bounds*/
-				}
-				return it;
-			}
+			Node(T d, Node* n = nullptr) : data(d), next(n) {}
 		};
 
 	private:
-		int size;
+		size_t size;
 		Node* head;
 		Node* tail;
 
 	public:
-		LinkedList()  { head = tail = nullptr; size = 0; }
+		LinkedList() { head = tail = nullptr; size = 0; }
 		LinkedList(const LinkedList& ll) = delete;
 		LinkedList& operator=(LinkedList ll) = delete;
-		~LinkedList() { this->clear(); }
+		~LinkedList() { clear(); }
 
-		inline bool  isEmpty() const { return (size == 0); }
-		inline int   size_()   const { return size; }
-		inline T     head_()   const { return head->data; }
-		inline T     tail_()   const { return tail->data; }
-		inline Iterator& begin() const { return Iterator(head); }
-		constexpr Iterator&& end() const { return Iterator(nullptr); }
+		inline bool   empty() const { return (size == 0); }
+		inline size_t size_() const { return size; }
+		inline T      head_() const { return head->data; }
+		inline T      tail_() const { return tail->data; }
+		inline Node*  begin() const { return head; }
+		inline Node*  end()   const { return tail; }
 
 		void clear() {
 			tail = nullptr;
@@ -73,23 +47,23 @@ namespace rds {
 		}
 
 		void addHead(const T& d) {
-			head = (isEmpty() ? tail = new Node(d) : new Node(d, head));
+			head = (empty() ? tail = new Node(d) : new Node(d, head));
 			size++;
 		}
 
 		void addTail(const T& d) { 
-			tail = (isEmpty() ? head = new Node(d) : tail->next = new Node(d));
+			tail = (empty() ? head = new Node(d) : tail->next = new Node(d));
 			size++;
 		}
 
-		void addAt(int idx, const T& d) {
-			if (idx < 0)     { /*throw bad index*/ return; }
+		void addAt(unsigned int idx, const T& d) {
+			if (idx < 0)     { throw; /*bad index*/ }
 			if (idx == 0)    { addHead(d); return; }
 			if (idx == size) { addTail(d); return; }
-			if (idx > size)  { /*throw cant access*/ return; }
+			if (idx > size)  { throw; /*cant access*/ }
 
 			auto ptr = head;
-			for (int i = 0; i < idx-1; i++)
+			for (unsigned int i = 0; i < idx - 1; ++i)
 				ptr = ptr->next;
 
 			ptr->next = new Node(d, ptr->next);
@@ -97,21 +71,21 @@ namespace rds {
 		}
 
 		T removeHead() {
-			if (!isEmpty()) {
+			if (!empty()) {
 				auto temp = head;
 				auto tdata = head->data;
 				head = head->next;
 				delete temp;
 				size--;
 
-				if (isEmpty()) tail = nullptr;
+				if (empty()) tail = nullptr;
 				return tdata;
 			}
-			else throw;
+			else throw; /*empty list*/
 		}
 
 		T removeTail() {
-			if (!isEmpty()) {
+			if (!empty()) {
 				if (size == 1) return removeHead();
 
 				auto ptr = head;
@@ -126,17 +100,17 @@ namespace rds {
 
 				return tdata;
 			}
-			else throw;
+			else throw; /*empty list*/
 		}
 
-		T removeAt(int idx) {
-			if (idx < 0)       /*throw bad index*/ return 0; //NULL
+		T removeAt(unsigned int idx) {
+			if (idx < 0)       throw; /*bad index*/
 			if (idx == 0)      return removeHead();
 			if (idx == size-1) return removeTail();
-			if (idx >= size)   /*throw bad index*/ return 0; //NULL
+			if (idx >= size)   throw; /*bad index*/
 
 			auto ptr = head;
-			for (int i = 0; i < idx - 1; i++)
+			for (unsigned int i = 0; i < idx - 1; i++)
 				ptr = ptr->next;
 
 			auto temp = ptr->next;
@@ -149,11 +123,16 @@ namespace rds {
 		}
 
 		bool remove(const T& d) {
-			if (isEmpty())
+			if (empty())
 				return false;
 			
 			if (head_() == d) {
 				removeHead();
+				return true;
+			}
+
+			if (tail_() == d) {
+				removeTail();
 				return true;
 			}
 			
@@ -167,11 +146,6 @@ namespace rds {
 				}
 			}
 
-			if (tail_() == d) {
-				removeTail();
-				return true;
-			}
-
 			return false;
 		}
 
@@ -182,12 +156,12 @@ namespace rds {
 			return false;
 		}
 
-		void operator<<(const T& e) {
-			addHead(e);
+		void operator<<(const T& d) {
+			addHead(d);
 		}
 
-		void operator>>(const T& e) {
-			addTail(e);
+		void operator>>(const T& d) {
+			addTail(d);
 		}
 
 		T operator--() {
@@ -198,6 +172,15 @@ namespace rds {
 			return removeTail();
 		}
 		
+		T& operator[](unsigned int idx) {
+			if (idx < 0 || idx >= size)
+				throw;
+			auto ptr = head;
+			for (int i = 0; i < idx; ++i)
+				ptr = ptr->next;
+			return ptr->data;
+		}
+
 	};
 
 }
