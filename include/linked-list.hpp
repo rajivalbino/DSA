@@ -15,7 +15,7 @@ namespace rds {
 			friend class LinkedList;
 
 		public:
-			Node(T d, Node* n = nullptr) : data(d), next(n) {}
+			Node(const T& d, Node* n = nullptr) : data(d), next(n) {}
 		};
 
 	private:
@@ -174,7 +174,7 @@ namespace rds {
 		
 		T& operator[](unsigned int idx) {
 			if (idx < 0 || idx >= size)
-				throw;
+				throw; /*bad index*/
 			auto ptr = head;
 			for (int i = 0; i < idx; ++i)
 				ptr = ptr->next;
