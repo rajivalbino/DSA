@@ -18,7 +18,7 @@ namespace rds {
 		Stack& operator=(Stack s) = delete;
 		~Stack() { list.clear(); }
 
-		inline bool isEmpty()	const { return list.isEmpty(); }
+		inline bool empty()		const { return list.empty(); }
 		inline int  size()		const { return list.size_(); }
 		inline T    top()		const { return list.head_(); }
 		inline void push(T d)		  { list.addHead(d); }

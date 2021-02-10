@@ -9,28 +9,28 @@ typedef rds::Queue<int> Queue;
  * private singly linked list
  *
  * Methods:
- * isEmpty, size, first, enque, deque, dequeAll
+ * empty, size, first, enque, deque, dequeAll
  *
  */
 
-TEST(TestQueue, isEmpty)
+TEST(TestQueue, empty)
 {
 	Queue* pque = new Queue();
-	EXPECT_TRUE(pque->isEmpty());
+	EXPECT_TRUE(pque->empty());
 
 	pque->enque(2);
-	EXPECT_FALSE(pque->isEmpty());
+	EXPECT_FALSE(pque->empty());
 
 	pque->deque();
-	EXPECT_TRUE(pque->isEmpty());
+	EXPECT_TRUE(pque->empty());
 
 	pque->enque(5);
 	pque->enque(10);
 	pque->enque(15);
-	EXPECT_FALSE(pque->isEmpty());
+	EXPECT_FALSE(pque->empty());
 
 	pque->dequeAll();
-	EXPECT_TRUE(pque->isEmpty());
+	EXPECT_TRUE(pque->empty());
 
 	delete pque;
 }

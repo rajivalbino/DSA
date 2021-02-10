@@ -9,28 +9,28 @@ typedef rds::Stack<int> Stack;
  * private singly linked list
  * 
  * Methods:
- * isEmpty, size, top, push, pop, popAll
+ * empty, size, top, push, pop, popAll
  * 
  */
 
-TEST(TestStack, isEmpty)
+TEST(TestStack, empty)
 {
 	Stack* pstck = new Stack();
-	EXPECT_TRUE(pstck->isEmpty());
+	EXPECT_TRUE(pstck->empty());
 
 	pstck->push(2);
-	EXPECT_FALSE(pstck->isEmpty());
+	EXPECT_FALSE(pstck->empty());
 
 	pstck->pop();
-	EXPECT_TRUE(pstck->isEmpty());
+	EXPECT_TRUE(pstck->empty());
 
 	pstck->push(5);
 	pstck->push(10);
 	pstck->push(15);
-	EXPECT_FALSE(pstck->isEmpty());
+	EXPECT_FALSE(pstck->empty());
 
 	pstck->popAll();
-	EXPECT_TRUE(pstck->isEmpty());
+	EXPECT_TRUE(pstck->empty());
 
 	delete pstck;
 }

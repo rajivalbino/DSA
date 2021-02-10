@@ -18,7 +18,7 @@ namespace rds {
 		Queue& operator=(Queue q) = delete;
 		~Queue() { list.clear(); }
 
-		inline bool isEmpty()	const { return list.isEmpty(); }
+		inline bool empty()		const { return list.empty(); }
 		inline int  size()		const { return list.size_(); }
 		inline T    first()		const { return list.head_(); }
 		inline void enque(T d)		  { list.addTail(d); }
