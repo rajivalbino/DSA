@@ -23,7 +23,7 @@
     <ClCompile Include="..\gtest\hash-table-gt.cpp">
       <Filter>gtest</Filter>
     </ClCompile>
-    <ClCompile Include="..\gtest\dynamic-array.cpp">
+    <ClCompile Include="..\gtest\dynamic-array-gt.cpp">
       <Filter>gtest</Filter>
     </ClCompile>
   </ItemGroup>

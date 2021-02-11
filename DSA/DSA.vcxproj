@@ -35,7 +35,7 @@
   <ItemGroup>
     <ClCompile Include="..\gtest\deque-gt.cpp" />
     <ClCompile Include="..\gtest\doubly-linked-list-gt.cpp" />
-    <ClCompile Include="..\gtest\dynamic-array.cpp" />
+    <ClCompile Include="..\gtest\dynamic-array-gt.cpp" />
     <ClCompile Include="..\gtest\hash-table-gt.cpp" />
     <ClCompile Include="..\gtest\linked-list-gt.cpp" />
     <ClCompile Include="..\gtest\priority-queue-gt.cpp" />
