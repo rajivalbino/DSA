@@ -10,23 +10,23 @@ namespace rds {
 	template<typename T>
 	class Deque {
 	private:
-		DoublyLinkedList<T> list;
+		DoublyLinkedList<T> _list;
 
 	public:
 		Deque()                   = default;
 		Deque(const Deque& d)     = delete;
 		Deque& operator=(Deque d) = delete;
-		~Deque()                  { list.clear(); }
+		~Deque()                  { _list.clear(); }
 
-		inline bool   empty()     const { return list.empty(); }
-		inline size_t size()      const { return list.size_(); }
-		inline T      peekFront() const { return list.head_(); }
-		inline T      peekBack()  const { return list.tail_(); }
+		inline bool   empty()     const { return _list.empty(); }
+		inline size_t size()      const { return _list.size(); }
+		inline T      peekFront() const { return _list.head(); }
+		inline T      peekBack()  const { return _list.tail(); }
 
-		inline void push(const T& d)   { list.addHead(d); }
-		inline T    pop()              { return list.removeHead(); }
-		inline void inject(const T& d) { list.addTail(d); }
-		inline T    eject()            { return list.removeTail(); }
-		inline void popAll()           { list.clear(); }
+		inline void pushFront(const T& d) { _list.addHead(d); }
+		inline T    popFront()            { return _list.removeHead(); }
+		inline void pushBack(const T& d)  { _list.addTail(d); }
+		inline T    popBack()             { return _list.removeTail(); }
+		inline void popAll()              { _list.clear(); }
 	};
 }
