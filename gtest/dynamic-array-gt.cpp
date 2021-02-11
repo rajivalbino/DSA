@@ -8,15 +8,15 @@ TEST(TestDynamicArray, sizeCapacity)
 
 	vec.pushBack(5);
 	vec.pushBack(10);
-	vec.pushFront(15);
-	vec.pushFront(20);
+	vec.pushBack(15);
+	vec.pushBack(20);
 	vec.pushBack(25);
 	EXPECT_FALSE(vec.empty());
 	EXPECT_EQ(5, vec.size());
 	EXPECT_EQ(8, vec.capacity());
 
-	vec.pushFront(30);
-	vec.pushFront(35);
+	vec.pushBack(30);
+	vec.pushBack(35);
 	vec.pushBack(40);
 	vec.pushBack(45);
 	EXPECT_EQ(9, vec.size());
@@ -43,8 +43,8 @@ TEST(TestDynamicArray, operatorBrackets)
 	vec[2] = 200;
 	EXPECT_EQ(200, vec[2]);
 	EXPECT_EQ(200, vec.popBack());
-	EXPECT_EQ(5, vec.popFront());
-	EXPECT_EQ(10, vec[0]);
+	EXPECT_EQ(10, vec.popBack());
+	EXPECT_EQ(5, vec[0]);
 	EXPECT_EQ(1, vec.size());
 }
 
@@ -53,7 +53,6 @@ TEST(TestDynamicArray, throws)
 	rds::DynamicArray<int> vec;
 
 	EXPECT_ANY_THROW(vec.popBack());
-	EXPECT_ANY_THROW(vec.popFront());
 
 	vec.pushBack(5);
 	vec.pushBack(10);
@@ -67,7 +66,6 @@ TEST(TestDynamicArray, throws)
 	EXPECT_ANY_THROW(vec[2]);
 
 	EXPECT_EQ(10, vec.popBack());
-	EXPECT_EQ(5, vec.popFront());
+	EXPECT_EQ(5, vec.popBack());
 	EXPECT_ANY_THROW(vec.popBack());
-	EXPECT_ANY_THROW(vec.popFront());
 }
