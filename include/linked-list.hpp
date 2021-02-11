@@ -9,76 +9,76 @@ namespace rds {
 
 	private:
 		class Node {
-			T data;
-			Node* next;
+			T _data;
+			Node* _next;
 
 			friend class LinkedList;
 
 		public:
-			Node(const T& d, Node* n = nullptr) : data(d), next(n) {}
+			Node(const T& d, Node* n = nullptr) : _data(d), _next(n) {}
 		};
 
 	private:
-		size_t size;
-		Node* head;
-		Node* tail;
+		size_t _size;
+		Node* _head;
+		Node* _tail;
 
 	public:
-		LinkedList()                        : size(0), head(nullptr), tail(nullptr) {}
+		LinkedList()                        : _size(0), _head(nullptr), _tail(nullptr) {}
 		LinkedList(const LinkedList& l)     = delete;
 		LinkedList& operator=(LinkedList l) = delete;
 		~LinkedList()                       { clear(); }
 
-		inline bool   empty() const { return (size == 0); }
-		inline size_t size_() const { return size; }
-		inline T      head_() const { return head->data; }
-		inline T      tail_() const { return tail->data; }
-		inline Node*  begin() const { return head; }
-		inline Node*  end()   const { return tail; }
+		inline bool   empty() const { return (_size == 0); }
+		inline size_t size()  const { return _size; }
+		inline T      head()  const { return _head->_data; }
+		inline T      tail()  const { return _tail->_data; }
+		inline Node*  begin() const { return _head; }
+		inline Node*  end()   const { return _tail; }
 
 		void clear() {
-			tail = nullptr;
-			while (head != nullptr) {
-				auto temp = head;
-				head = head->next;
+			_tail = nullptr;
+			while (_head != nullptr) {
+				auto temp = _head;
+				_head = _head->_next;
 				delete temp;
 			}
-			size = 0;
+			_size = 0;
 		}
 
 		void addHead(const T& d) {
-			head = (empty() ? tail = new Node(d) : new Node(d, head));
-			size++;
+			_head = (empty() ? _tail = new Node(d) : new Node(d, _head));
+			_size++;
 		}
 
 		void addTail(const T& d) { 
-			tail = (empty() ? head = new Node(d) : tail->next = new Node(d));
-			size++;
+			_tail = (empty() ? _head = new Node(d) : _tail->_next = new Node(d));
+			_size++;
 		}
 
 		void addAt(unsigned int idx, const T& d) {
-			if (idx < 0)     { throw; /*bad index*/ }
-			if (idx == 0)    { addHead(d); return; }
-			if (idx == size) { addTail(d); return; }
-			if (idx > size)  { throw; /*cant access*/ }
+			if (idx < 0)      { throw; /*bad index*/ }
+			if (idx == 0)     { addHead(d); return; }
+			if (idx == _size) { addTail(d); return; }
+			if (idx > _size)  { throw; /*cant access*/ }
 
-			auto ptr = head;
+			auto ptr = _head;
 			for (unsigned int i = 0; i < idx - 1; ++i)
-				ptr = ptr->next;
+				ptr = ptr->_next;
 
-			ptr->next = new Node(d, ptr->next);
-			size++;
+			ptr->_next = new Node(d, ptr->_next);
+			_size++;
 		}
 
 		T removeHead() {
 			if (!empty()) {
-				auto temp = head;
-				auto tdata = head->data;
-				head = head->next;
+				auto temp = _head;
+				auto tdata = _head->_data;
+				_head = _head->_next;
 				delete temp;
-				size--;
+				_size--;
 
-				if (empty()) tail = nullptr;
+				if (empty()) _tail = nullptr;
 				return tdata;
 			}
 			else throw; /*empty list*/
@@ -86,17 +86,17 @@ namespace rds {
 
 		T removeTail() {
 			if (!empty()) {
-				if (size == 1) return removeHead();
+				if (_size == 1) return removeHead();
 
-				auto ptr = head;
-				while (ptr->next->next != nullptr)
-					ptr = ptr->next;
+				auto ptr = _head;
+				while (ptr->_next->_next != nullptr)
+					ptr = ptr->_next;
 
-				auto tdata = ptr->next->data;
-				delete ptr->next;
-				tail = ptr;
-				tail->next = nullptr;
-				size--;
+				auto tdata = ptr->_next->_data;
+				delete ptr->_next;
+				_tail = ptr;
+				_tail->_next = nullptr;
+				_size--;
 
 				return tdata;
 			}
@@ -104,20 +104,20 @@ namespace rds {
 		}
 
 		T removeAt(unsigned int idx) {
-			if (idx < 0)       throw; /*bad index*/
-			if (idx == 0)      return removeHead();
-			if (idx == size-1) return removeTail();
-			if (idx >= size)   throw; /*bad index*/
+			if (idx < 0)        throw; /*bad index*/
+			if (idx == 0)       return removeHead();
+			if (idx == _size-1) return removeTail();
+			if (idx >= _size)   throw; /*bad index*/
 
-			auto ptr = head;
+			auto ptr = _head;
 			for (unsigned int i = 0; i < idx - 1; i++)
-				ptr = ptr->next;
+				ptr = ptr->_next;
 
-			auto temp = ptr->next;
-			auto tdata = temp->data;
-			ptr->next = ptr->next->next;
+			auto temp = ptr->_next;
+			auto tdata = _temp->_data;
+			ptr->_next = ptr->_next->_next;
 			delete temp;
-			size--;
+			_size--;
 
 			return tdata;
 		}
@@ -126,22 +126,22 @@ namespace rds {
 			if (empty())
 				return false;
 			
-			if (head_() == d) {
+			if (head() == d) {
 				removeHead();
 				return true;
 			}
 
-			if (tail_() == d) {
+			if (tail() == d) {
 				removeTail();
 				return true;
 			}
 			
-			for (auto ptr = head; ptr->next != nullptr; ptr = ptr->next) {
-				if (ptr->next->data == d) {
-					auto temp = ptr->next;
-					ptr->next = ptr->next->next;
+			for (auto ptr = _head; ptr->_next != nullptr; ptr = ptr->_next) {
+				if (ptr->_next->_data == d) {
+					auto temp = ptr->_next;
+					ptr->_next = ptr->_next->_next;
 					delete temp;
-					size--;
+					_size--;
 					return true;
 				}
 			}
@@ -150,8 +150,8 @@ namespace rds {
 		}
 
 		bool contains(const T& d) const {
-			for (auto ptr = head; ptr != nullptr; ptr = ptr->next)
-				if (ptr->data == d)
+			for (auto ptr = _head; ptr != nullptr; ptr = ptr->_next)
+				if (ptr->_data == d)
 					return true;
 			return false;
 		}
@@ -173,12 +173,12 @@ namespace rds {
 		}
 		
 		T& operator[](unsigned int idx) {
-			if (idx < 0 || idx >= size)
+			if (idx < 0 || idx >= _size)
 				throw; /*bad index*/
-			auto ptr = head;
+			auto ptr = _head;
 			for (int i = 0; i < idx; ++i)
-				ptr = ptr->next;
-			return ptr->data;
+				ptr = ptr->_next;
+			return ptr->_data;
 		}
 
 	};

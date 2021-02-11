@@ -10,20 +10,20 @@ namespace rds {
 	template<typename T>
 	class Queue {
 	private:
-		LinkedList<T> list;
+		LinkedList<T> _list;
 
 	public:
 		Queue()					  = default;
 		Queue(const Queue& q)	  = delete;
 		Queue& operator=(Queue q) = delete;
-		~Queue()				  { list.clear(); }
+		~Queue()				  { _list.clear(); }
 
-		inline bool   empty() const { return list.empty(); }
-		inline size_t size()  const { return list.size_(); }
-		inline T      first() const { return list.head_(); }
+		inline bool   empty() const { return _list.empty(); }
+		inline size_t size()  const { return _list.size(); }
+		inline T      first() const { return _list.head(); }
 
-		inline void enque(const T& d) { list.addTail(d); }
-		inline T    deque()			  { return list.removeHead(); }
-		inline void dequeAll()		  { list.clear(); }
+		inline void enque(const T& d) { _list.addTail(d); }
+		inline T    deque()			  { return _list.removeHead(); }
+		inline void dequeAll()		  { _list.clear(); }
 	};
 }

@@ -23,69 +23,69 @@ TEST(TestLinkedList, clear)
 	plist->addHead(5);
 	plist->addHead(10);
 	plist->addHead(20);
-	EXPECT_EQ(3, plist->size_());
-	EXPECT_EQ(20, plist->head_());
-	EXPECT_EQ(5, plist->tail_());
+	EXPECT_EQ(3, plist->size());
+	EXPECT_EQ(20, plist->head());
+	EXPECT_EQ(5, plist->tail());
 	EXPECT_FALSE(plist->empty());
 
 	plist->clear();
-	EXPECT_EQ(0, plist->size_());
+	EXPECT_EQ(0, plist->size());
 	EXPECT_TRUE(plist->begin() == nullptr);
 	EXPECT_TRUE(plist->empty());
 
 	plist->addHead(2);
 	plist->addTail(3);
-	EXPECT_EQ(2, plist->size_());
+	EXPECT_EQ(2, plist->size());
 	EXPECT_TRUE(plist->begin() != nullptr);
 	EXPECT_FALSE(plist->empty());
 
 	plist->clear();
-	EXPECT_EQ(0, plist->size_());
+	EXPECT_EQ(0, plist->size());
 	EXPECT_TRUE(plist->begin() == nullptr);
 	EXPECT_TRUE(plist->empty());
 
 	delete plist;
 }
 
-TEST(TestLinkedList, size_)
+TEST(TestLinkedList, size)
 {
 	LinkedList* plist = new LinkedList();
-	EXPECT_EQ(0, plist->size_());
+	EXPECT_EQ(0, plist->size());
 
 	plist->addHead(10);
-	EXPECT_EQ(1, plist->size_());
+	EXPECT_EQ(1, plist->size());
 
 	plist->addHead(20);
-	EXPECT_EQ(2, plist->size_());
+	EXPECT_EQ(2, plist->size());
 
 	plist->addTail(30);
-	EXPECT_EQ(3, plist->size_());
+	EXPECT_EQ(3, plist->size());
 	
 	plist->removeHead();
-	EXPECT_EQ(2, plist->size_());
+	EXPECT_EQ(2, plist->size());
 
 	for (int i = 0; i < 10; i++)
 		plist->addTail(i);
-	EXPECT_EQ(12, plist->size_());
+	EXPECT_EQ(12, plist->size());
 
 	delete plist;
 }
 
-TEST(TestLinkedList, head_)
+TEST(TestLinkedList, head)
 {
 	LinkedList* plist = new LinkedList();
 	plist->addHead(5);
-	EXPECT_EQ(5, plist->head_());
+	EXPECT_EQ(5, plist->head());
 
 	delete plist;
 }
 
-TEST(TestLinkedList, tail_)
+TEST(TestLinkedList, tail)
 {
 	LinkedList* plist = new LinkedList();
 	plist->addHead(10);
 	plist->addHead(20);
-	EXPECT_EQ(10, plist->tail_());
+	EXPECT_EQ(10, plist->tail());
 
 	delete plist;
 }
@@ -97,13 +97,13 @@ TEST(TestLinkedList, addHead)
 	plist->addHead(10);
 	plist->addHead(20);
 	plist->addHead(30);
-	EXPECT_EQ(4, plist->size_());
-	EXPECT_EQ(30, plist->head_());
-	EXPECT_EQ(5, plist->tail_());
+	EXPECT_EQ(4, plist->size());
+	EXPECT_EQ(30, plist->head());
+	EXPECT_EQ(5, plist->tail());
 
 	plist->addHead(50);
-	EXPECT_EQ(5, plist->size_());
-	EXPECT_EQ(50, plist->head_());
+	EXPECT_EQ(5, plist->size());
+	EXPECT_EQ(50, plist->head());
 	
 	delete plist;
 }
@@ -115,13 +115,13 @@ TEST(TestLinkedList, addTail)
 	plist->addTail(10);
 	plist->addTail(20);
 	plist->addTail(30);
-	EXPECT_EQ(4, plist->size_());
-	EXPECT_EQ(5, plist->head_());
-	EXPECT_EQ(30, plist->tail_());
+	EXPECT_EQ(4, plist->size());
+	EXPECT_EQ(5, plist->head());
+	EXPECT_EQ(30, plist->tail());
 
 	plist->addTail(50);
-	EXPECT_EQ(5, plist->size_());
-	EXPECT_EQ(50, plist->tail_());
+	EXPECT_EQ(5, plist->size());
+	EXPECT_EQ(50, plist->tail());
 	
 	delete plist;
 }
@@ -133,10 +133,10 @@ TEST(TestLinkedList, addAt)
 	plist.addTail(10);
 	plist.addTail(20);
 	plist.addAt(1, 100);
-	EXPECT_EQ(4, plist.size_());
+	EXPECT_EQ(4, plist.size());
 	EXPECT_EQ(100, plist[1]);
-	EXPECT_EQ(5, plist.head_());
-	EXPECT_EQ(20, plist.tail_());
+	EXPECT_EQ(5, plist.head());
+	EXPECT_EQ(20, plist.tail());
 
 	plist.clear();
 	plist.addHead(1);
@@ -144,10 +144,10 @@ TEST(TestLinkedList, addAt)
 	plist.addTail(3);
 	plist.addTail(4);
 	plist.addAt(2, 200);
-	EXPECT_EQ(5, plist.size_());
+	EXPECT_EQ(5, plist.size());
 	EXPECT_EQ(200, plist[2]);
-	EXPECT_EQ(1, plist.head_());
-	EXPECT_EQ(4, plist.tail_());
+	EXPECT_EQ(1, plist.head());
+	EXPECT_EQ(4, plist.tail());
 }
 
 TEST(TestLinkedList, removeHead)
@@ -155,19 +155,19 @@ TEST(TestLinkedList, removeHead)
 	LinkedList* plist = new LinkedList();
 	plist->addHead(5);
 	plist->addHead(10);
-	EXPECT_EQ(10, plist->head_());
-	EXPECT_EQ(5, plist->tail_());
-	EXPECT_EQ(2, plist->size_());
+	EXPECT_EQ(10, plist->head());
+	EXPECT_EQ(5, plist->tail());
+	EXPECT_EQ(2, plist->size());
 
 	plist->removeHead();
-	EXPECT_EQ(5, plist->head_());
-	EXPECT_EQ(5, plist->tail_());
-	EXPECT_EQ(1, plist->size_());
+	EXPECT_EQ(5, plist->head());
+	EXPECT_EQ(5, plist->tail());
+	EXPECT_EQ(1, plist->size());
 
 	plist->removeHead();
 	EXPECT_TRUE(plist->empty());
 	EXPECT_TRUE(plist->begin() == nullptr);
-	EXPECT_EQ(0, plist->size_());
+	EXPECT_EQ(0, plist->size());
 
 	delete plist;
 }
@@ -178,24 +178,24 @@ TEST(TestLinkedList, removeTail)
 	plist->addHead(5);
 	plist->addHead(10);
 	plist->addHead(15);
-	EXPECT_EQ(15, plist->head_());
-	EXPECT_EQ(5, plist->tail_());
-	EXPECT_EQ(3, plist->size_());
+	EXPECT_EQ(15, plist->head());
+	EXPECT_EQ(5, plist->tail());
+	EXPECT_EQ(3, plist->size());
 	
 	plist->removeTail();
-	EXPECT_EQ(15, plist->head_());
-	EXPECT_EQ(10, plist->tail_());
-	EXPECT_EQ(2, plist->size_());
+	EXPECT_EQ(15, plist->head());
+	EXPECT_EQ(10, plist->tail());
+	EXPECT_EQ(2, plist->size());
 
 	plist->removeTail();
-	EXPECT_EQ(15, plist->head_());
-	EXPECT_EQ(15, plist->tail_());
-	EXPECT_EQ(1, plist->size_());
+	EXPECT_EQ(15, plist->head());
+	EXPECT_EQ(15, plist->tail());
+	EXPECT_EQ(1, plist->size());
 	
 	plist->removeTail();
 	EXPECT_TRUE(plist->empty());
 	EXPECT_TRUE(plist->begin() == nullptr);
-	EXPECT_EQ(0, plist->size_());
+	EXPECT_EQ(0, plist->size());
 
 	delete plist;
 }
@@ -211,10 +211,10 @@ TEST(TestLinkedList, remove)
 	list >> 25;
 
 	EXPECT_TRUE(list.remove(15));
-	EXPECT_EQ(4, list.size_());
+	EXPECT_EQ(4, list.size());
 	EXPECT_FALSE(list.remove(2));
 	EXPECT_TRUE(list.remove(5));
-	EXPECT_EQ(10, list.head_());
+	EXPECT_EQ(10, list.head());
 }
 
 TEST(TestLinkedList, operatorLeftShift)

@@ -10,20 +10,20 @@ namespace rds {
 	template<typename T>
 	class Stack {
 	private:
-		LinkedList<T> list;
+		LinkedList<T> _list;
 	
 	public:
 		Stack()					  = default;
 		Stack(const Stack& s)	  = delete;
 		Stack& operator=(Stack s) = delete;
-		~Stack()				  { list.clear(); }
+		~Stack()				  { _list.clear(); }
 
-		inline bool   empty() const { return list.empty(); }
-		inline size_t size()  const { return list.size_(); }
-		inline T      top()   const { return list.head_(); }
+		inline bool   empty() const { return _list.empty(); }
+		inline size_t size()  const { return _list.size(); }
+		inline T      top()   const { return _list.head(); }
 		
-		inline void push(const T& d) { list.addHead(d); }
-		inline T    pop()			 { return list.removeHead(); }
-		inline void popAll()		 { list.clear(); }
+		inline void push(const T& d) { _list.addHead(d); }
+		inline T    pop()			 { return _list.removeHead(); }
+		inline void popAll()		 { _list.clear(); }
 	};
 }
