@@ -60,7 +60,10 @@ namespace rds {
 			if (_size >= _cap)
 				reserve(_cap << 1);
 
-			_data[_size++] = T(std::forward<Args>(args)...);
+			// construct in-place, no need to construct on the stack
+			// and move to the heap, this syntax allow to construct
+			// the object on the right memory address
+			new(&_data[_size++]) T(std::forward<Args>(args)...);
 		}
 
 		T popBack() {
