@@ -54,6 +54,15 @@ namespace rds {
 			_data[_size++] = std::move(d);
 		}
 
+		// variadic template
+		template<typename... Args>
+		void emplaceBack(Args&&... args) {
+			if (_size >= _cap)
+				reserve(_cap << 1);
+
+			_data[_size++] = T(std::forward<Args>(args)...);
+		}
+
 		T popBack() {
 			if (!empty()) {
 				_data[--_size].~T();
