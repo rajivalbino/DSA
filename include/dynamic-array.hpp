@@ -27,16 +27,17 @@ namespace rds {
 		}
 
 		void reserve(size_t c) {
-			if (c > _cap) {
 				auto temp = _data;
 				_data = new T[c];
 
+				if (_size > c)
+					_size = c;
+
 				for (int i = 0; i < _size; ++i)
-					_data[i] = temp[i];
+					_data[i] = std::move(temp[i]);
 				
 				_cap = c;
 				delete[] temp;
-			}
 		}
 
 		void pushBack(const T& d) {
@@ -62,13 +63,19 @@ namespace rds {
 				throw 0; /*empty list*/
 		}
 
-		T& operator[](unsigned int idx) {
+		T& operator[](size_t idx) {
 			if (idx < 0 || idx >= _size)
 				throw 1; /*bad index*/
 
 			return _data[idx];
 		}
 
+		const T& operator[](size_t idx) const {
+			if (idx < 0 || idx >= _size)
+				throw 1; /*bad index*/
+
+			return _data[idx];
+		}
 
 	};
 
