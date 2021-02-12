@@ -12,32 +12,51 @@ namespace rds {
 		size_t _cap;
 
 	public:
-		DynamicArray(size_t c = 8)               : _size(0), _cap(c) { _data = new T[_cap]; }
+		DynamicArray(size_t c = 8) : _size(0), _cap(c), _data(nullptr) {
+			reserve(_cap);
+		}
+
+		~DynamicArray() {
+			clear();
+			::operator delete(_data, _cap * sizeof(T));
+		}
+		
 		DynamicArray(const DynamicArray& da)     = delete;
 		DynamicArray& operator=(DynamicArray da) = delete;
-		~DynamicArray()                          { delete[] _data; }
 
 		inline bool   empty()    const { return (_size == 0); }
 		inline size_t size()     const { return _size; }
 		inline size_t capacity() const { return _cap; }
 
 		void clear() {
-			delete[] _data;
-			DynamicArray();
+			for (size_t i = 0; i < _size; ++i)
+				_data[i].~T();
+
+			_size = 0;
 		}
 
 		void reserve(size_t c) {
-				auto temp = _data;
-				_data = new T[c];
+				auto oldData = _data;
+
+				// this syntax allows allocate memory without
+				// calling the constructor, since it can be
+				// a reallocation we dont need reconstruction
+				_data = (T*)::operator new(c * sizeof(T));
 
 				if (_size > c)
 					_size = c;
 
-				for (int i = 0; i < _size; ++i)
-					_data[i] = std::move(temp[i]);
+				for (size_t i = 0; i < _size; ++i)
+					_data[i] = std::move(oldData[i]);
+
+				for (size_t i = 0; i < _size; ++i)
+					oldData[i].~T();
 				
+				// this syntax allows deallocate the memory
+				// without calling the destructor, since we
+				// already called it manually above
+				::operator delete(oldData, _cap * sizeof(T));
 				_cap = c;
-				delete[] temp;
 		}
 
 		void pushBack(const T& d) {
