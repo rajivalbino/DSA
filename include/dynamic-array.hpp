@@ -21,8 +21,10 @@ namespace rds {
 			::operator delete(_data, _cap * sizeof(T));
 		}
 		
-		DynamicArray(const DynamicArray& da)     = delete;
-		DynamicArray& operator=(DynamicArray da) = delete;
+		DynamicArray(const DynamicArray& da)                = delete;
+		DynamicArray& operator=(DynamicArray da)            = delete;
+		DynamicArray(DynamicArray&& da)            noexcept = delete;
+		DynamicArray& operator=(DynamicArray&& da) noexcept = delete;
 
 		inline bool   empty()    const { return (_size == 0); }
 		inline size_t size()     const { return _size; }
@@ -66,7 +68,7 @@ namespace rds {
 			_data[_size++] = d;
 		}
 
-		void pushBack(T&& d) {
+		void pushBack(T&& d) noexcept {
 			if (_size >= _cap)
 				reserve(_cap << 1);
 
