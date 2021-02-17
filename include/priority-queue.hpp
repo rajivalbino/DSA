@@ -1,13 +1,14 @@
 // Priority Queue
 // int datatype
 
+#include "dynamic-array.hpp"
+
 #pragma once
 
 namespace rds {
 	template<typename T>
 	class PriorityQueue {
-
-
+		DynamicArray<T> _array;
 
 	public:
 
