@@ -96,6 +96,13 @@ namespace rds {
 				throw 0; /*empty list*/
 		}
 
+		bool contains(const T& d) const {
+			for (size_t i = 0; i < _size; ++i)
+				if (_data[i] == d)
+					return true;
+			return false;
+		}
+
 		T& operator[](size_t idx) {
 			if (idx < 0 || idx >= _size)
 				throw 1; /*bad index*/
