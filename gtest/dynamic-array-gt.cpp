@@ -42,8 +42,8 @@ TEST(TestDynamicArray, operatorBrackets)
 
 	vec[2] = 200;
 	EXPECT_EQ(200, vec[2]);
-	EXPECT_EQ(200, vec.popBack());
-	EXPECT_EQ(10, vec.popBack());
+	vec.popBack();
+	vec.popBack();
 	EXPECT_EQ(5, vec[0]);
 	EXPECT_EQ(1, vec.size());
 }
@@ -65,7 +65,7 @@ TEST(TestDynamicArray, throws)
 	vec.popBack();
 	EXPECT_ANY_THROW(vec[2]);
 
-	EXPECT_EQ(10, vec.popBack());
-	EXPECT_EQ(5, vec.popBack());
+	vec.popBack();
+	vec.popBack();
 	EXPECT_ANY_THROW(vec.popBack());
 }
