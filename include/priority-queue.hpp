@@ -61,6 +61,9 @@ namespace rds {
 				reserve(_cap << 1);
 
 			_data[_size++] = d;
+
+			if (_data[(_size - 1) >> 1] < _data[_size])
+				std::swap(_data[(_size - 1) >> 1], _data[_size]); // to be tested
 		}
 
 		void insert(T&& d) noexcept {
