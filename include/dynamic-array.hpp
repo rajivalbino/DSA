@@ -26,9 +26,13 @@ namespace rds {
 		DynamicArray(DynamicArray&& da)            noexcept = delete;
 		DynamicArray& operator=(DynamicArray&& da) noexcept = delete;
 
-		inline bool   empty()    const { return (_size == 0); }
-		inline size_t size()     const { return _size; }
-		inline size_t capacity() const { return _cap; }
+		inline bool     empty()    const { return (_size == 0); }
+		inline size_t   size()     const { return _size; }
+		inline size_t   capacity() const { return _cap; }
+		inline T&       front()          { empty() ? throw 0 : return _data[0]; }
+		inline const T& front()    const { empty() ? throw 0 : return _data[0]; }
+		inline T&       back()           { empty() ? throw 0 : return _data[_size - 1]; }
+		inline const T& back()     const { empty() ? throw 0 : return _data[_size - 1]; }
 
 		void clear() {
 			for (size_t i = 0; i < _size; ++i)
@@ -87,11 +91,9 @@ namespace rds {
 			new(&_data[_size++]) T(std::forward<Args>(args)...);
 		}
 
-		T popBack() {
-			if (!empty()) {
+		void popBack() {
+			if (!empty())
 				_data[--_size].~T();
-				return _data[_size];
-			}
 			else
 				throw 0; /*empty list*/
 		}
