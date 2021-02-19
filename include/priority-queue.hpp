@@ -24,10 +24,33 @@ namespace rds {
 			::operator delete(_data, _cap * sizeof(T));
 		}
 
-		PriorityQueue(const PriorityQueue& da)                = delete;
-		PriorityQueue& operator=(PriorityQueue da)            = delete;
-		PriorityQueue(PriorityQueue&& da)            noexcept = delete;
-		PriorityQueue& operator=(PriorityQueue&& da) noexcept = delete;
+		PriorityQueue(const PriorityQueue& other)     = delete;
+		PriorityQueue& operator=(PriorityQueue other) = delete;
+
+		PriorityQueue(PriorityQueue&& other)            noexcept {
+			_data = other._data;
+			_size = other._size;
+			_cap = other._cap;
+
+			other._data = nullptr;
+			other._size = 0;
+			other._cap = 0;
+		}
+
+		PriorityQueue& operator=(PriorityQueue&& other) noexcept {
+			if (this != &other) {
+				clear();
+				::operator delete(_data, _cap * sizeof(T));
+
+				_data = other._data;
+				_size = other._size;
+				_cap = other._cap;
+
+				other._data = nullptr;
+				other._size = 0;
+				other._cap = 0;
+			}
+		}
 
 		bool   empty()    const { return (_size == 0); }
 		size_t size()     const { return _size; }
@@ -102,10 +125,12 @@ namespace rds {
 
 		bool remove(const T& d) {
 			// TODO: binary search
+			return false;
 		}
 
 		bool contains(const T& d) const {
 			// TODO: binary search
+			return false;
 		}
 
 	private:
