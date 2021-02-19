@@ -138,8 +138,9 @@ namespace rds {
 			if (!empty()) {
 				if (_size == 1) return removeHead();
 				
-				for (auto ptr = _head; ptr->_next->_next != nullptr; ptr = ptr->_next);
-					// empty for
+				auto ptr = _head;
+				while (ptr->_next->_next != nullptr)
+					ptr = ptr->_next;
 
 				delete ptr->_next;
 				_tail = ptr;
