@@ -1,5 +1,7 @@
 // Priority Queue
-// int datatype
+// max heap
+// template datatype
+// the objects must be comparable (operator<() and operator>() defined)
 
 #pragma once
 
@@ -60,17 +62,16 @@ namespace rds {
 			if (_size >= _cap)
 				reserve(_cap << 1);
 
-			_data[_size++] = d;
-
-			if (_data[(_size - 1) >> 1] < _data[_size])
-				std::swap(_data[(_size - 1) >> 1], _data[_size]); // to be tested
+			_data[_size] = d;
+			bubbleUp(_size++);
 		}
 
 		void insert(T&& d) noexcept {
 			if (_size >= _cap)
 				reserve(_cap << 1);
 
-			_data[_size++] = std::move(d);
+			_data[_size] = std::move(d);
+			bubbleUp(_size++);
 		}
 		
 		template<typename... Args>
@@ -78,7 +79,8 @@ namespace rds {
 			if (_size >= _cap)
 				reserve(_cap << 1)
 
-				new(&_data[_size++]) T(std::forward<Args>(args)...);
+			new(&_data[_size]) T(std::forward<Args>(args)...);
+			bubbleUp(_size++);
 		}
 
 		T peek() const {
@@ -88,18 +90,50 @@ namespace rds {
 				return _data[0];
 		}
 		
-		T poll() {
+		void poll() {
 			if (empty())
 				throw 0; /*empty list*/
 			else {
-				auto tdata = _data[0];
-
+				_data[0].~T();
+				_data[0] = std::move(_data[--_size]);
+				bubbleDown(0);
 			}
 		}
 
-		bool remove(const T& d) {}
+		bool remove(const T& d) {
+			// TODO: binary search
+		}
 
-		bool contains(const T& d) const {}
+		bool contains(const T& d) const {
+			// TODO: binary search
+		}
 
+	private:
+		void bubbleUp(size_t idx) {
+			size_t idxParent = (idx-1) >> 1;
+
+			if (_data[idx] > _data[idxParent]) {
+				std::swap(_data[idx], _data[idxParent]);
+				bubbleUp(idxParent);
+			}
+			else
+				return;
+		}
+
+		void bubbleDown(size_t idx) {
+			size_t idxLeftChild  = (k << 1) + 1;
+			size_t idxRightChild = (k << 1) + 2;
+
+			if (_data[idx] < _data[idxLeftChild]) {
+				std::swap(_data[idx], _data[idxLeftChild]);
+				bubbleDown(idxLeftChild);
+			}
+			else if (_data[idx] < _data[idxRightChild]) {
+				std::swap(_data[idx], _data[idxRightChild]);
+				bubbleDown(idxRightChild);
+			}
+			else
+				return;
+		}
 	};
 }
