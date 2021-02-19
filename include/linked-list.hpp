@@ -58,8 +58,8 @@ namespace rds {
 
 		inline bool   empty() const { return (_size == 0); }
 		inline size_t size()  const { return _size; }
-		inline T      head()  const { return _head->_data; }
-		inline T      tail()  const { return _tail->_data; }
+		inline T&     head()  const { empty() ? throw 0; : return _head->_data; }
+		inline T&     tail()  const { empty() ? throw 0; : return _tail->_data; }
 		inline Node*  begin() const { return _head; }
 		inline Node*  end()   const { return _tail; }
 
