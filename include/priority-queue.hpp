@@ -87,7 +87,8 @@ namespace rds {
 				reserve(_cap << 1);
 
 			_data[_size] = d;
-			bubbleUp(_size++);
+			bubbleUp(_size);
+			_size++;
 		}
 
 		void insert(T&& d) noexcept {
@@ -95,7 +96,8 @@ namespace rds {
 				reserve(_cap << 1);
 
 			_data[_size] = std::move(d);
-			bubbleUp(_size++);
+			bubbleUp(_size);
+			_size++;
 		}
 		
 		template<typename... Args>
@@ -104,7 +106,8 @@ namespace rds {
 				reserve(_cap << 1)
 
 			new(&_data[_size]) T(std::forward<Args>(args)...);
-			bubbleUp(_size++);
+			bubbleUp(_size);
+			_size++;
 		}
 		
 		void poll() {
@@ -112,7 +115,8 @@ namespace rds {
 				throw 0; /*empty list*/
 			else {
 				_data[0].~T();
-				_data[0] = std::move(_data[--_size]);
+				_size--;
+				_data[0] = std::move(_data[_size]);
 				bubbleDown(0);
 			}
 		}
@@ -129,6 +133,9 @@ namespace rds {
 
 	private:
 		void bubbleUp(size_t idx) {
+			if (idx == 0)
+				return;
+
 			size_t idxParent = (idx-1) >> 1;
 
 			if (_data[idx] > _data[idxParent]) {
@@ -140,8 +147,11 @@ namespace rds {
 		}
 
 		void bubbleDown(size_t idx) {
-			size_t idxLeftChild  = (k << 1) + 1;
-			size_t idxRightChild = (k << 1) + 2;
+			size_t idxLeftChild  = (idx << 1) + 1;
+			size_t idxRightChild = (idx << 1) + 2;
+
+			if (idxLeftChild >= _size)
+				return;
 
 			if (_data[idx] < _data[idxLeftChild]) {
 				std::swap(_data[idx], _data[idxLeftChild]);
