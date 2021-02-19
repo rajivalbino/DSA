@@ -16,6 +16,7 @@ namespace rds {
 
 		public:
 			Node(const T& d, Node* n = nullptr) : _data(d), _next(n) {}
+			Node(T&& d, Node* n = nullptr) : _data(std::move(d)), _next(n) {}
 		};
 
 	private:
@@ -51,75 +52,92 @@ namespace rds {
 			_size++;
 		}
 
-		void addTail(const T& d) { 
+		void addHead(T&& d) {
+			_head = (empty() ? _tail = new Node(std::move(d)) : new Node(std::move(d), _head));
+			_size++;
+		}
+
+		void addTail(const T& d) {
 			_tail = (empty() ? _head = new Node(d) : _tail->_next = new Node(d));
 			_size++;
 		}
 
-		void addAt(unsigned int idx, const T& d) {
-			if (idx < 0)      { throw; /*bad index*/ }
+		void addTail(T&& d) { 
+			_tail = (empty() ? _head = new Node(std::move(d)) : _tail->_next = new Node(std::move(d)));
+			_size++;
+		}
+
+		void addAt(size_t idx, const T& d) {
+			if (idx < 0)      { throw 1; /*bad index*/ }
 			if (idx == 0)     { addHead(d); return; }
 			if (idx == _size) { addTail(d); return; }
-			if (idx > _size)  { throw; /*cant access*/ }
+			if (idx > _size)  { throw 1; /*bad index*/ }
 
 			auto ptr = _head;
-			for (unsigned int i = 0; i < idx - 1; ++i)
+			for (size_t i = 0; i < idx-1; ++i)
 				ptr = ptr->_next;
 
 			ptr->_next = new Node(d, ptr->_next);
 			_size++;
 		}
 
-		T removeHead() {
+		void addAt(size_t idx, T&& d) {
+			if (idx < 0)      { throw 1; /*bad index*/ }
+			if (idx == 0)     { addHead(std::move(d)); return; }
+			if (idx == _size) { addTail(std::move(d)); return; }
+			if (idx > _size)  { throw 1; /*bad index*/ }
+
+			auto ptr = _head;
+			for (size_t i = 0; i < idx - 1; ++i)
+				ptr = ptr->_next;
+
+			ptr->_next = new Node(std::move(d), ptr->_next);
+			_size++;
+		}
+
+		void removeHead() {
 			if (!empty()) {
 				auto temp = _head;
-				auto tdata = _head->_data;
 				_head = _head->_next;
 				delete temp;
 				_size--;
 
 				if (empty()) _tail = nullptr;
-				return tdata;
 			}
-			else throw; /*empty list*/
+			else
+				throw 0; /*empty list*/
 		}
 
-		T removeTail() {
+		void removeTail() {
 			if (!empty()) {
 				if (_size == 1) return removeHead();
+				
+				for (auto ptr = _head; ptr->_next->_next != nullptr; ptr = ptr->_next);
+					// empty for
 
-				auto ptr = _head;
-				while (ptr->_next->_next != nullptr)
-					ptr = ptr->_next;
-
-				auto tdata = ptr->_next->_data;
 				delete ptr->_next;
 				_tail = ptr;
 				_tail->_next = nullptr;
 				_size--;
-
-				return tdata;
 			}
-			else throw; /*empty list*/
+			else
+				throw 0; /*empty list*/
 		}
 
-		T removeAt(unsigned int idx) {
-			if (idx < 0)        throw; /*bad index*/
+		void removeAt(size_t idx) {
+			if (idx < 0)        throw 1; /*bad index*/
 			if (idx == 0)       return removeHead();
 			if (idx == _size-1) return removeTail();
-			if (idx >= _size)   throw; /*bad index*/
+			if (idx >= _size)   throw 1; /*bad index*/
 
 			auto ptr = _head;
-			for (unsigned int i = 0; i < idx - 1; i++)
+			for (size_t i = 0; i < idx - 1; i++)
 				ptr = ptr->_next;
 
 			auto temp = ptr->_next;
-			auto tdata = _temp->_data;
 			ptr->_next = ptr->_next->_next;
 			delete temp;
 			_size--;
-
-			return tdata;
 		}
 
 		bool remove(const T& d) {
@@ -164,17 +182,28 @@ namespace rds {
 			addTail(d);
 		}
 
-		T operator--() {
-			return removeHead();
+		void operator--() {
+			removeHead();
 		}
 
-		T operator--(int) {
-			return removeTail();
+		void operator--(int) {
+			removeTail();
 		}
 		
-		T& operator[](unsigned int idx) {
+		T& operator[](size_t idx) {
 			if (idx < 0 || idx >= _size)
-				throw; /*bad index*/
+				throw 1; /*bad index*/
+
+			auto ptr = _head;
+			for (int i = 0; i < idx; ++i)
+				ptr = ptr->_next;
+			return ptr->_data;
+		}
+
+		const T& operator[](size_t idx) const {
+			if (idx < 0 || idx >= _size)
+				throw 1; /*bad index*/
+
 			auto ptr = _head;
 			for (int i = 0; i < idx; ++i)
 				ptr = ptr->_next;
