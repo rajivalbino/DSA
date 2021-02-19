@@ -227,11 +227,11 @@ TEST(TestLinkedList, operatorLeftShift)
 	list << 20;
 	list << 25;
 
-	EXPECT_EQ(25, list.removeHead());
-	EXPECT_EQ(20, list.removeHead());
-	EXPECT_EQ(15, list.removeHead());
-	EXPECT_EQ(10, list.removeHead());
-	EXPECT_EQ(5,  list.removeHead());
+	EXPECT_EQ(25, list[0]);
+	EXPECT_EQ(20, list[1]);
+	EXPECT_EQ(15, list[2]);
+	EXPECT_EQ(10, list[3]);
+	EXPECT_EQ(5,  list[4]);
 }
 
 TEST(TestLinkedList, operatorRightShift)
@@ -244,11 +244,11 @@ TEST(TestLinkedList, operatorRightShift)
 	list >> 20;
 	list >> 25;
 
-	EXPECT_EQ(5,  list.removeHead());
-	EXPECT_EQ(10, list.removeHead());
-	EXPECT_EQ(15, list.removeHead());
-	EXPECT_EQ(20, list.removeHead());
-	EXPECT_EQ(25, list.removeHead());
+	EXPECT_EQ(5,  list[0]);
+	EXPECT_EQ(10, list[1]);
+	EXPECT_EQ(15, list[2]);
+	EXPECT_EQ(20, list[3]);
+	EXPECT_EQ(25, list[4]);
 
 }
 
@@ -261,10 +261,26 @@ TEST(TestLinkedList, operatorDecrement)
 	list << 15;
 	list << 20;
 	list << 25;
+	list << 30;
 
-	EXPECT_EQ(25, --list);
-	EXPECT_EQ(5, list--);
-	EXPECT_EQ(20, --list);
-	EXPECT_EQ(10, list--);
-	EXPECT_EQ(15, --list);
+	EXPECT_EQ(30, list.head());
+	EXPECT_EQ(5, list.tail());
+
+	--list;
+	EXPECT_EQ(25, list.head());
+	
+	list--;
+	EXPECT_EQ(10, list.tail());
+	
+	--list;
+	EXPECT_EQ(20, list.head());
+
+	list--;
+	EXPECT_EQ(15, list.tail());
+
+	--list;
+	EXPECT_EQ(15, list.head());
+
+	list--;
+	EXPECT_ANY_THROW(list.head());
 }
