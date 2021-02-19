@@ -25,10 +25,37 @@ namespace rds {
 		Node* _tail;
 
 	public:
-		LinkedList()                        : _size(0), _head(nullptr), _tail(nullptr) {}
-		LinkedList(const LinkedList& l)     = delete;
-		LinkedList& operator=(LinkedList l) = delete;
-		~LinkedList()                       { clear(); }
+		LinkedList()  : _size(0), _head(nullptr), _tail(nullptr) {}
+		~LinkedList() { clear(); }
+		
+		LinkedList(const LinkedList& other)     = delete; // copying discouraged
+		LinkedList& operator=(LinkedList other) = delete; // copying discouraged
+
+		LinkedList(T&& other) noexcept {
+			_size = other._size;
+			_head = other._head;
+			_tail = other._tail;
+
+			other._size = 0;
+			other._head = nullptr;
+			other._tail = nullptr;
+		}
+
+		LinkedList& operator=(LinkedList&& other) noexcept {
+			if (this != &other) {
+
+				clear();
+
+				_size = other._size;
+				_head = other._head;
+				_tail = other._tail;
+
+				other._size = 0;
+				other._head = nullptr;
+				other._tail = nullptr;
+			}
+			return *this;
+		}
 
 		inline bool   empty() const { return (_size == 0); }
 		inline size_t size()  const { return _size; }
@@ -47,27 +74,27 @@ namespace rds {
 			_size = 0;
 		}
 
-		void addHead(const T& d) {
+		void addHead(const T& d) { // O(1)
 			_head = (empty() ? _tail = new Node(d) : new Node(d, _head));
 			_size++;
 		}
 
-		void addHead(T&& d) {
+		void addHead(T&& d) { // O(1)
 			_head = (empty() ? _tail = new Node(std::move(d)) : new Node(std::move(d), _head));
 			_size++;
 		}
 
-		void addTail(const T& d) {
+		void addTail(const T& d) { // O(1)
 			_tail = (empty() ? _head = new Node(d) : _tail->_next = new Node(d));
 			_size++;
 		}
 
-		void addTail(T&& d) { 
+		void addTail(T&& d) { // O(1)
 			_tail = (empty() ? _head = new Node(std::move(d)) : _tail->_next = new Node(std::move(d)));
 			_size++;
 		}
 
-		void addAt(size_t idx, const T& d) {
+		void addAt(size_t idx, const T& d) { // O(n)
 			if (idx < 0)      { throw 1; /*bad index*/ }
 			if (idx == 0)     { addHead(d); return; }
 			if (idx == _size) { addTail(d); return; }
@@ -81,7 +108,7 @@ namespace rds {
 			_size++;
 		}
 
-		void addAt(size_t idx, T&& d) {
+		void addAt(size_t idx, T&& d) { // O(n)
 			if (idx < 0)      { throw 1; /*bad index*/ }
 			if (idx == 0)     { addHead(std::move(d)); return; }
 			if (idx == _size) { addTail(std::move(d)); return; }
@@ -95,7 +122,7 @@ namespace rds {
 			_size++;
 		}
 
-		void removeHead() {
+		void removeHead() { // O(1)
 			if (!empty()) {
 				auto temp = _head;
 				_head = _head->_next;
@@ -108,7 +135,7 @@ namespace rds {
 				throw 0; /*empty list*/
 		}
 
-		void removeTail() {
+		void removeTail() { // O(n)
 			if (!empty()) {
 				if (_size == 1) return removeHead();
 				
@@ -124,7 +151,7 @@ namespace rds {
 				throw 0; /*empty list*/
 		}
 
-		void removeAt(size_t idx) {
+		void removeAt(size_t idx) { // O(n)
 			if (idx < 0)        throw 1; /*bad index*/
 			if (idx == 0)       return removeHead();
 			if (idx == _size-1) return removeTail();
@@ -140,7 +167,7 @@ namespace rds {
 			_size--;
 		}
 
-		bool remove(const T& d) {
+		bool remove(const T& d) { // O(n)
 			if (empty())
 				return false;
 			
@@ -167,7 +194,7 @@ namespace rds {
 			return false;
 		}
 
-		bool contains(const T& d) const {
+		bool contains(const T& d) const { // O(n)
 			for (auto ptr = _head; ptr != nullptr; ptr = ptr->_next)
 				if (ptr->_data == d)
 					return true;
