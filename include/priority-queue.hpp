@@ -52,10 +52,10 @@ namespace rds {
 			}
 		}
 
-		bool   empty()    const { return (_size == 0); }
-		size_t size()     const { return _size; }
-		size_t capacity() const { return _cap; }
-		T&     peek()     const { if (empty()) throw 0; else return _data[0]; }
+		inline bool   empty()    const { return (_size == 0); }
+		inline size_t size()     const { return _size; }
+		inline size_t capacity() const { return _cap; }
+		inline T&     peek()     const { if (empty()) throw 0; else return _data[0]; }
 
 		void clear() {
 			for (size_t i = 0; i < _size; ++i)
@@ -122,12 +122,12 @@ namespace rds {
 		}
 
 		bool remove(const T& d) {
-			// TODO: binary search
+			// TODO: linear search
 			return false;
 		}
 
 		bool contains(const T& d) const {
-			// TODO: binary search
+			// TODO: linear search
 			return false;
 		}
 
@@ -142,8 +142,6 @@ namespace rds {
 				std::swap(_data[idx], _data[idxParent]);
 				bubbleUp(idxParent);
 			}
-			else
-				return;
 		}
 
 		void bubbleDown(size_t idx) {
@@ -153,16 +151,42 @@ namespace rds {
 			if (idxLeftChild >= _size)
 				return;
 
-			if (_data[idx] < _data[idxLeftChild]) {
-				std::swap(_data[idx], _data[idxLeftChild]);
-				bubbleDown(idxLeftChild);
+			if (idxRightChild >= _size) {
+				if (_data[idx] < _data[idxLeftChild]) {
+					std::swap(_data[idx], _data[idxLeftChild]);
+					return; 
+				}
 			}
-			else if (_data[idx] < _data[idxRightChild]) {
-				std::swap(_data[idx], _data[idxRightChild]);
-				bubbleDown(idxRightChild);
+
+			auto& LeftChild = _data[idxLeftChild];
+			auto& RightChild = _data[idxRightChild];
+
+			// needs refactor
+			if (LeftChild >= RightChild) {
+				if (_data[idx] < LeftChild) {
+					std::swap(_data[idx], LeftChild);
+					bubbleDown(idxLeftChild);
+				}
+				else if (_data[idx] < RightChild) {
+					std::swap(_data[idx], RightChild);
+					bubbleDown(idxRightChild);
+				}
+				else
+					return;
 			}
-			else
-				return;
+			else {
+				if (_data[idx] < RightChild) {
+					std::swap(_data[idx], RightChild);
+					bubbleDown(idxRightChild);
+				}
+				else if (_data[idx] < LeftChild) {
+					std::swap(_data[idx], LeftChild);
+					bubbleDown(idxLeftChild);
+				}
+				else
+					return;
+			}
+
 		}
 	};
 }
