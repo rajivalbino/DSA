@@ -27,7 +27,7 @@ namespace rds {
 		PriorityQueue(const PriorityQueue& other)     = delete;
 		PriorityQueue& operator=(PriorityQueue other) = delete;
 
-		PriorityQueue(PriorityQueue&& other)            noexcept {
+		PriorityQueue(PriorityQueue&& other) noexcept {
 			_data = other._data;
 			_size = other._size;
 			_cap = other._cap;
@@ -55,6 +55,7 @@ namespace rds {
 		bool   empty()    const { return (_size == 0); }
 		size_t size()     const { return _size; }
 		size_t capacity() const { return _cap; }
+		T&     peek()     const { if (empty()) throw 0; else return _data[0]; }
 
 		void clear() {
 			for (size_t i = 0; i < _size; ++i)
@@ -104,13 +105,6 @@ namespace rds {
 
 			new(&_data[_size]) T(std::forward<Args>(args)...);
 			bubbleUp(_size++);
-		}
-
-		T peek() const {
-			if (empty())
-				throw 0; /*empty list*/
-			else
-				return _data[0];
 		}
 		
 		void poll() {
