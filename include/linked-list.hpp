@@ -31,7 +31,7 @@ namespace rds {
 		LinkedList(const LinkedList& other)     = delete; // copying discouraged
 		LinkedList& operator=(LinkedList other) = delete; // copying discouraged
 
-		LinkedList(T&& other) noexcept {
+		LinkedList(LinkedList&& other) noexcept {
 			_size = other._size;
 			_head = other._head;
 			_tail = other._tail;
@@ -43,7 +43,6 @@ namespace rds {
 
 		LinkedList& operator=(LinkedList&& other) noexcept {
 			if (this != &other) {
-
 				clear();
 
 				_size = other._size;
