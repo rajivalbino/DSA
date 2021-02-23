@@ -12,14 +12,13 @@ namespace rds {
 		using Value     = typename DynamicArray::ValueType;
 		using Pointer   = Value*;
 		using Reference = Value&;
-		using Iterator    = DynamicArrayIterator;
-		using IteratorRef = Iterator&;
+		using Iterator  = DynamicArrayIterator;
 
 	private:
 		Pointer _ptr;
 
 	public:
-		DynamicArrayIterator(Pointer ptr) : _ptr(ptr) {}
+		DynamicArrayIterator(Pointer p) : _ptr(p) {}
 
 		Reference operator[](size_t idx) {
 			return *(_ptr + idx);
@@ -33,7 +32,7 @@ namespace rds {
 			return *_ptr;
 		}
 
-		IteratorRef operator++() {
+		Iterator& operator++() {
 			++_ptr;
 			return *this;
 		}
@@ -44,7 +43,7 @@ namespace rds {
 			return temp;
 		}
 
-		IteratorRef operator--() {
+		Iterator& operator--() {
 			--_ptr;
 			return *this;
 		}
@@ -55,7 +54,7 @@ namespace rds {
 			return temp;
 		}
 
-		IteratorRef operator+=(size_t idx) {
+		Iterator& operator+=(size_t idx) {
 			_ptr += idx;
 			return *this;
 		}
@@ -65,7 +64,7 @@ namespace rds {
 			return (temp += idx);
 		}
 
-		IteratorRef operator-=(size_t idx) {
+		Iterator& operator-=(size_t idx) {
 			_ptr -= idx;
 			return *this;
 		}
@@ -75,11 +74,11 @@ namespace rds {
 			return (temp -= idx);
 		}
 
-		bool operator==(const IteratorRef other) {
+		bool operator==(const Iterator& other) {
 			return (_ptr == other._ptr);
 		}
 
-		bool operator!=(const IteratorRef other) {
+		bool operator!=(const Iterator& other) {
 			return !(*this == other);
 		}
 
@@ -122,6 +121,9 @@ namespace rds {
 		inline const T& front()    const { empty() ? throw 0 : return _data[0]; }
 		inline T&       back()           { empty() ? throw 0 : return _data[_size - 1]; }
 		inline const T& back()     const { empty() ? throw 0 : return _data[_size - 1]; }
+
+		inline Iterator begin() { return Iterator(_data); }
+		inline Iterator end()   { return Iterator(_data + _size); }
 
 		void clear() {
 			for (size_t i = 0; i < _size; ++i)
@@ -206,14 +208,6 @@ namespace rds {
 				throw 1; /*bad index*/
 
 			return _data[idx];
-		}
-
-		Iterator begin() {
-			return Iterator(_data);
-		}
-
-		Iterator end() {
-			return Iterator(_data + _size);
 		}
 
 	};
