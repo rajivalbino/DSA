@@ -65,7 +65,7 @@ namespace rds {
 			return (temp += idx);
 		}
 
-		IteratorRef operator -=(size_t idx) {
+		IteratorRef operator-=(size_t idx) {
 			_ptr -= idx;
 			return *this;
 		}
