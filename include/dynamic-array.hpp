@@ -53,7 +53,8 @@ namespace rds {
 					_size = c;
 
 				for (size_t i = 0; i < _size; ++i)
-					_data[i] = std::move(oldData[i]);
+					//_data[i] = std::move(oldData[i]);
+					new (&_data[i]) T(std::move(oldData[i]));
 
 				for (size_t i = 0; i < _size; ++i)
 					oldData[i].~T();
