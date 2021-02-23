@@ -4,6 +4,65 @@
 #pragma once
 
 namespace rds {
+	template<typename LinkedList>
+	class LinkedListIterator {
+	
+	public:
+		using Value = typename LinkedList::ValueType;
+		using Pointer = typename LinkedList::NodePointer;
+		using Reference = Value&;
+		using Iterator = LinkedListIterator;
+
+	private:
+		Pointer _ptr;
+
+	public:
+		LinkedListIterator(Pointer p) : _ptr(p) {}
+
+		Reference operator*() {
+			return _ptr->_data;
+		}
+
+		Iterator& operator++() {
+			_ptr = _ptr->_next;
+			return *this;
+		}
+
+		Iterator operator++(int) {
+			Iterator temp(*this);
+			++(*this);
+			return temp;
+		}
+
+		Iterator& operator+=(size_t idx) {
+			for (int i = 0; i < idx; ++i) {
+				if (_ptr)
+					++(*this);
+				else
+					break;
+			}
+			return *this;
+		}
+
+		Iterator operator+(size_t idx) {
+			Iterator temp = *this;
+			return (temp += idx);
+		}
+
+		Reference operator[](size_t idx) {
+			return *(*this + idx);
+		}
+		
+		bool operator==(const Iterator& other) {
+			return (_ptr == other._ptr);
+		}
+
+		bool operator!=(const Iterator& other) {
+			return !(*this == other);
+		}
+
+	};
+
 	template<typename T>
 	class LinkedList {
 
@@ -12,12 +71,17 @@ namespace rds {
 			T _data;
 			Node* _next;
 
-			friend class LinkedList;
-
-		public:
 			Node(const T& d, Node* n = nullptr) : _data(d), _next(n) {}
 			Node(T&& d, Node* n = nullptr) : _data(std::move(d)), _next(n) {}
+			
+			friend class LinkedList<T>;
+			friend class Iterator;
 		};
+
+	public:
+		using ValueType = T;
+		using NodePointer = Node*;
+		using Iterator = LinkedListIterator<LinkedList<ValueType>>;
 
 	private:
 		size_t _size;
@@ -60,8 +124,9 @@ namespace rds {
 		inline size_t size()  const { return _size; }
 		inline T&     head()  const { if (empty()) throw 0; else return _head->_data; }
 		inline T&     tail()  const { if (empty()) throw 0; else return _tail->_data; }
-		inline Node*  begin() const { return _head; }
-		inline Node*  end()   const { return _tail; }
+		
+		inline Iterator begin() const { return Iterator(_head); }
+		constexpr Iterator end() { return Iterator(nullptr); }
 
 		void clear() {
 			_tail = nullptr;

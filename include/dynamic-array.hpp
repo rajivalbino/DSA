@@ -3,13 +3,101 @@
 #pragma once
 
 namespace rds {
+
+	template<typename DynamicArray>
+	class DynamicArrayIterator {
+
+		// let's copy the standard library
+	public:
+		using Value     = typename DynamicArray::ValueType;
+		using Pointer   = Value*;
+		using Reference = Value&;
+		using Iterator  = DynamicArrayIterator;
+
+	private:
+		Pointer _ptr;
+
+	public:
+		DynamicArrayIterator(Pointer p) : _ptr(p) {}
+
+		Reference operator[](size_t idx) {
+			return *(_ptr + idx);
+		}
+
+		Pointer operator->() {
+			return _ptr;
+		}
+
+		Reference operator*() {
+			return *_ptr;
+		}
+
+		Iterator& operator++() {
+			++_ptr;
+			return *this;
+		}
+
+		Iterator operator++(int) {
+			Iterator temp(*this);
+			++(*this);
+			return temp;
+		}
+
+		Iterator& operator--() {
+			--_ptr;
+			return *this;
+		}
+
+		Iterator operator--(int) {
+			Iterator temp(*this);
+			--(*this);
+			return temp;
+		}
+
+		Iterator& operator+=(size_t idx) {
+			_ptr += idx;
+			return *this;
+		}
+
+		Iterator operator+(size_t idx) {
+			Iterator temp = *this;
+			return (temp += idx);
+		}
+
+		Iterator& operator-=(size_t idx) {
+			_ptr -= idx;
+			return *this;
+		}
+
+		Iterator operator-(size_t idx) {
+			Iterator temp = *this;
+			return (temp -= idx);
+		}
+
+		bool operator==(const Iterator& other) {
+			return (_ptr == other._ptr);
+		}
+
+		bool operator!=(const Iterator& other) {
+			return !(*this == other);
+		}
+
+	};
+
+
 	template<typename T>
 	class DynamicArray {
+
+	public:
+		using ValueType = T;
+		using Iterator = DynamicArrayIterator<DynamicArray<ValueType>>;
 
 	private:
 		T* _data;
 		size_t _size;
 		size_t _cap;
+
+		friend class Iterator;
 
 	public:
 		DynamicArray(size_t c = 8) : _size(0), _cap(c), _data(nullptr) {
@@ -33,6 +121,9 @@ namespace rds {
 		inline const T& front()    const { empty() ? throw 0 : return _data[0]; }
 		inline T&       back()           { empty() ? throw 0 : return _data[_size - 1]; }
 		inline const T& back()     const { empty() ? throw 0 : return _data[_size - 1]; }
+
+		inline Iterator begin() { return Iterator(_data); }
+		inline Iterator end()   { return Iterator(_data + _size); }
 
 		void clear() {
 			for (size_t i = 0; i < _size; ++i)
