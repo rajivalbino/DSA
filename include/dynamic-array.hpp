@@ -3,13 +3,102 @@
 #pragma once
 
 namespace rds {
+
+	template<typename DynamicArray>
+	class DynamicArrayIterator {
+
+		// let's copy the standard library
+	public:
+		using Value     = typename DynamicArray::ValueType;
+		using Pointer   = Value*;
+		using Reference = Value&;
+		using Iterator    = DynamicArrayIterator;
+		using IteratorRef = Iterator&;
+
+	private:
+		Pointer _ptr;
+
+	public:
+		DynamicArrayIterator(Pointer ptr) : _ptr(ptr) {}
+
+		Reference operator[](size_t idx) {
+			return *(_ptr + idx);
+		}
+
+		Pointer operator->() {
+			return _ptr;
+		}
+
+		Reference operator*() {
+			return *_ptr;
+		}
+
+		IteratorRef operator++() {
+			++_ptr;
+			return *this;
+		}
+
+		Iterator operator++(int) {
+			Iterator temp(*this);
+			++(*this);
+			return temp;
+		}
+
+		IteratorRef operator--() {
+			--_ptr;
+			return *this;
+		}
+
+		Iterator operator--(int) {
+			Iterator temp(*this);
+			--(*this);
+			return temp;
+		}
+
+		IteratorRef operator+=(size_t idx) {
+			_ptr += idx;
+			return *this;
+		}
+
+		Iterator operator+(size_t idx) {
+			Iterator temp = *this;
+			return (temp += idx);
+		}
+
+		IteratorRef operator -=(size_t idx) {
+			_ptr -= idx;
+			return *this;
+		}
+
+		Iterator operator-(size_t idx) {
+			Iterator temp = *this;
+			return (temp -= idx);
+		}
+
+		bool operator==(const IteratorRef other) {
+			return (_ptr == other._ptr);
+		}
+
+		bool operator!=(const IteratorRef other) {
+			return !(*this == other);
+		}
+
+	};
+
+
 	template<typename T>
 	class DynamicArray {
+
+	public:
+		using ValueType = T;
+		using Iterator = DynamicArrayIterator<DynamicArray<ValueType>>;
 
 	private:
 		T* _data;
 		size_t _size;
 		size_t _cap;
+
+		friend class Iterator;
 
 	public:
 		DynamicArray(size_t c = 8) : _size(0), _cap(c), _data(nullptr) {
@@ -117,6 +206,14 @@ namespace rds {
 				throw 1; /*bad index*/
 
 			return _data[idx];
+		}
+
+		Iterator begin() {
+			return Iterator(_data);
+		}
+
+		Iterator end() {
+			return Iterator(_data + _size);
 		}
 
 	};
