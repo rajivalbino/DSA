@@ -10,7 +10,6 @@ namespace rds {
 	public:
 		using Value = typename LinkedList::ValueType;
 		using Pointer = typename LinkedList::NodePointer;
-		using Reference = Value&;
 		using Iterator = LinkedListIterator;
 
 	private:
@@ -19,9 +18,13 @@ namespace rds {
 	public:
 		LinkedListIterator(Pointer p) : _ptr(p) {}
 
-		Reference operator*() {
+		Value& operator*() {
 			return _ptr->_data;
 		}
+
+		//Value* operator->() {
+		//	return &(_ptr->_data);
+		//}
 
 		Iterator& operator++() {
 			_ptr = _ptr->_next;
@@ -49,7 +52,7 @@ namespace rds {
 			return (temp += idx);
 		}
 
-		Reference operator[](size_t idx) {
+		Value& operator[](size_t idx) {
 			return *(*this + idx);
 		}
 		
@@ -139,22 +142,34 @@ namespace rds {
 		}
 
 		void addHead(const T& d) { // O(1)
-			_head = (empty() ? _tail = new Node(d) : new Node(d, _head));
+			if (empty())
+				_head = _tail = new Node(d);
+			else
+				_head = new Node(d, _head);
 			_size++;
 		}
 
 		void addHead(T&& d) { // O(1)
-			_head = (empty() ? _tail = new Node(std::move(d)) : new Node(std::move(d), _head));
+			if (empty())
+				_head = _tail = new Node(std::move(d));
+			else
+				_head = new Node(std::move(d), _head);
 			_size++;
 		}
 
 		void addTail(const T& d) { // O(1)
-			_tail = (empty() ? _head = new Node(d) : _tail->_next = new Node(d));
+			if (empty())
+				_tail = _head = new Node(d);
+			else
+				_tail = _tail->_next = new Node(d);
 			_size++;
 		}
 
 		void addTail(T&& d) { // O(1)
-			_tail = (empty() ? _head = new Node(std::move(d)) : _tail->_next = new Node(std::move(d)));
+			if (empty())
+				_tail = _head = new Node(std::move(d));
+			else
+				_tail = _tail->_next = new Node(std::move(d));
 			_size++;
 		}
 
