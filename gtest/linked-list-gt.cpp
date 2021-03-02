@@ -344,3 +344,35 @@ TEST(TestLinkedList, iterators2)
 	EXPECT_EQ(30, (it+1)[2]);
 	EXPECT_EQ(30, *(it += 3));
 }
+
+TEST(TestLinkedList, iterators3)
+{
+	class MyInt {
+	public:
+		int _val;
+		MyInt(int v) : _val(v) {}
+		int val() { return _val; }
+	};
+
+	rds::LinkedList<MyInt> list;
+	auto it = list.begin();
+	EXPECT_TRUE(it == list.begin());
+	EXPECT_TRUE(it == list.end());
+
+	list.addTail(5);
+	list.addTail(10);
+	list.addTail(15);
+	list.addTail(20);
+	list.addTail(25);
+
+	//  0  1  2  3  4
+	//  5 10 15 20 25
+
+	//EXPECT_EQ(5, it->val());
+	//EXPECT_EQ(10, (it+1)->val());
+	//EXPECT_EQ(25, ((it+3)+1)->val());
+
+	EXPECT_TRUE(it == list.begin());
+	EXPECT_TRUE(it+4 != list.end());
+	EXPECT_TRUE(it + list.size() == list.end());
+}
