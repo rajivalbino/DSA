@@ -180,6 +180,7 @@ namespace rds {
 			// construct in-place, no need to construct on the stack
 			// and move to the heap, this syntax allow to construct
 			// the object on the right memory address
+			// don't change it, you don't know how it works
 			new(&_data[_size++]) T(std::forward<Args>(args)...);
 		}
 
